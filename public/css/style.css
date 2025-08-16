@@ -1,0 +1,159 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+h1 {
+    font-weight: 700;
+    text-align: center;
+}
+
+.fa-compass {
+    color: #FF385C;
+    font-size: 2rem;
+}
+
+/* ---------------- Navbar ---------------- */
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    padding: 0.6rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #FF385C !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-link {
+    color: #222222 !important;
+    font-weight: 500;
+    margin: 0 6px;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-link:hover {
+    color: #FF385C !important;
+    transform: translateY(-2px);
+}
+
+.nav-header{
+  
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-name{
+    position: relative;
+    
+    font-weight: 600;
+    font-size: 1.3rem;
+    padding: 0.6rem 1rem;
+}
+
+.nav-logo{
+    position: relative;
+    left: 22px;
+    top: 5px;
+}
+
+.nav-name:hover{
+    cursor: pointer;
+    color: #FF385C !important;
+    transform: translateY(-2px);
+}
+
+#navbarNavAltMarkup{
+    justify-content: end !important; 
+}
+
+
+/* ---------------- Footer ---------------- */
+.f-info {
+    width: 100%;
+    border-top: 1px solid #dee2e6;
+    height: 5.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.f-info-social,
+.f-info-brand,
+.f-info-links {
+    width: fit-content;
+}
+
+.f-info-links a {
+    text-decoration: none;
+}
+
+.f-info-social i {
+    font-size: 1.2rem;
+}
+
+.f-info-social i:hover {
+    transform: scale(1.20);
+    cursor: pointer;
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+}
+
+.f-info-links a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* ---------------- Cards ---------------- */
+.card {
+    border: none !important;
+    margin: 0.2rem;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-a-tag {
+    padding: 0px;
+    text-decoration: none;
+}
+
+.card-img-overlay {
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    background-color: white;
+    opacity: 0.2;
+}
+
+/* ---------------- Add Place Form ---------------- */
+.add-btn {
+    background-color: #FF385C !important;
+    border: none !important;
+}
+
+.new-form-heading {
+    margin: 30px 0;
+    font-weight: 700;
+}
