@@ -27,7 +27,7 @@
                                 <b>
                                     <%=list.title%>
                                 </b> <br>
-                                &#8377; <%= list.price.toLocaleString("en-IN") %>
+                                &#8377; <%= list.price ? list.price.toLocaleString("en-IN") : 0 %>
                             </p>
                         </div>
                     </div>

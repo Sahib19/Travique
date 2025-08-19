@@ -4,8 +4,17 @@ const mongoose = require("mongoose");
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 const path = require("path");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js")
+
+//allowing  hoppscotch
+const cors = require("cors");
+app.use(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
+
+//// joi walla validation
+const {listingSchema} = require("./schema.js");
 
 //ejs mate -> help to create templates like includes and partials
 const ejsMate = require("ejs-mate");
@@ -31,55 +40,72 @@ main()
     })
     .catch(err => console.log(err));
 
+//creating a middleware to handle the validation
+const validateListing = (req,res,next) =>{
+    let {error} = listingSchema.validate(req.body);
+    if(error){
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(404,errMsg)
+    }else{
+        next();
+    }   
+}    
 
-
-app.get("/home", (req, res) => {
-    res.send("Hi i am Root");
-})
-
-
-app.get("/listing", async(req,res)=>{
+app.get("/listing", wrapAsync(async(req,res)=>{
     const allListing = await Listing.find({});
     res.render("listings/index.ejs" , {allListing});
-})
+}))
 
 app.get("/listing/new",(req,res)=>{
     res.render("listings/form.ejs");
 })
 
-app.get("/listing/:id",async (req,res)=>{
+app.get("/listing/:id",wrapAsync(async (req,res)=>{
     let {id} =  req.params;
     const listing = await Listing.findById(id)
     res.render("listings/show.ejs",{listing});
-})
+}))
 
-app.post("/listing",async (req,res)=>{
-    console.log(req.body);
-    let newlisting = Listing(req.body); // ek newlisting document bann geya listing model ke hisab se
+//create route
+app.post("/listing", validateListing , wrapAsync( async (req,res)=>{
+    let newlisting = Listing(req.body); 
     await newlisting.save();
     res.redirect("/listing");
-})
+}))
 
-app.get("/listing/edit/:id",async (req,res)=>{
+app.get("/listing/edit/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params;
      let listing = await Listing.findById(id);
     res.render("listings/editForm.ejs",{listing});
-})
+}))
 
 //changing the update in the database
-app.put("/listing/update/:id",async (req,res)=>{
+app.put("/listing/update/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params
+     if(!req.body){
+        throw new ExpressError(400,"Send valid Data"); // bad request due to client mistake
+    }
     await Listing.findByIdAndUpdate(id,req.body,{runValidators:true , new:true});
     res.redirect("/listing");
 
-})
+}))
 
 //delete roooute
-app.delete("/listing/:id",async (req,res)=>{
+app.delete("/listing/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params;
     await Listing.findByIdAndDelete(id);
      res.redirect("/listing");
 
+}))
+
+app.all("/",(req,res,next)=>{
+    next(new ExpressError(404,"Page not Found"));
+});
+
+//middleware to handle the error ocured in the backend
+app.use((err,req,res,next)=>{
+    let {status = 505 ,message= "Some Error Ocurred"} = err;
+    res.status(status).render("error.ejs",{message});
 })
 
 app.listen(8080, () => {

@@ -1,53 +1,84 @@
 <% layout("/layouts/boilerplate") %>
 
-<body style="font-family: Arial, sans-serif; background-color: #f9f9f9;">
+    <body style="font-family: Arial, sans-serif; background-color: #f9f9f9;">
 
-    <!-- Container with spacing from navbar -->
-    <div style="margin-top: 80px; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-        
-        <h2 style="text-align: center; margin-bottom: 20px; color: #333;">✏️ Update Details</h2>
-        
-        <form method="POST" action="/listing/update/<%= listing._id %>?_method=PUT" style="display: flex; flex-direction: column; gap: 15px;">
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Title</label>
-                <input name="title" placeholder="Enter title" value="<%= listing.title %>" 
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Description</label>
-                <textarea name="description" placeholder="Enter description" rows="3"
-                          style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none;"><%= listing.description %></textarea>
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Price</label>
-                <input name="price" placeholder="Enter price" value="<%= listing.price %>" 
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Image URL</label>
-                <input name="image" placeholder="Enter image url" value="<%= listing.image ? listing.image.url : '' %>" 
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Location</label>
-                <input name="location" placeholder="Enter location" value="<%= listing.location %>" 
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
-            </div>
-            
-            <div>
-                <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Country</label>
-                <input name="country" placeholder="Enter country" value="<%= listing.country %>" 
-                       style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
-            </div>
+        <!-- Container with spacing from navbar -->
+        <div
+            style="margin-top: 80px; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-            <button type="submit" style="margin-top: 10px; background: #28a745; color: white; font-weight: bold; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
-                ✅ Submit
-            </button>
-        </form>
-    </div>
-</body>
+            <h2 style="text-align: center; margin-bottom: 20px; color: #333;">✏️ Update Details</h2>
+
+            <form method="POST" action="/listing/update/<%= listing._id %>?_method=PUT"
+                style="display: flex; flex-direction: column; gap: 15px;" class="needs-validation" novalidate>
+
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Title</label>
+                    <input name="title" placeholder="Enter title" value="<%= listing.title %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please give a valid username.
+                    </div>
+                </div>
+
+                <div>
+                    <label
+                        style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Description</label>
+                    <textarea name="description" placeholder="Enter description" rows="3"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none;"
+                        required><%= listing.description %></textarea>
+
+                    <div class="invalid-feedback">
+                        Please give a valid description.
+                    </div>
+                </div>
+
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Price</label>
+                    <input name="price" placeholder="Enter price" value="<%= listing.price %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+
+                    <div class="invalid-feedback">
+                        Please give a valid price.
+                    </div>
+                </div>
+
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Image URL</label>
+                    <input name="image" placeholder="Enter image url"
+                        value="<%= listing.image.url %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+                </div>
+
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Location</label>
+                    <input name="location" placeholder="Enter location" value="<%= listing.location %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+
+                        <div class="invalid-feedback">
+                        Please give a valid location.
+                    </div>
+                </div>
+
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Country</label>
+                    <input name="country" placeholder="Enter country" value="<%= listing.country %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+
+                        <div class="invalid-feedback">
+                        Please give a valid country.
+                    </div>
+                </div>
+
+                <button type="submit"
+                    style="margin-top: 10px; background: #28a745; color: white; font-weight: bold; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
+                    ✅ Submit
+                </button>
+            </form>
+        </div>
+
+        <script src="/js/script.js"></script>
+    </body>

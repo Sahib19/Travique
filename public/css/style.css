@@ -46,16 +46,14 @@ h1 {
 }
 
 .nav-header{
-  
     display: flex;
     flex-direction: row;
 }
 
 .nav-name{
     position: relative;
-    
-    font-weight: 600;
-    font-size: 1.3rem;
+    font-weight: 600 ;
+    font-size: 1.3rem; 
     padding: 0.6rem 1rem;
 }
 
