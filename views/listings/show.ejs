@@ -1,56 +1,116 @@
 <% layout("/layouts/boilerplate") %>
 
+    <body style="font-family: Arial, sans-serif; background-color: #f5f7fa;">
 
-<body style="font-family: Arial, sans-serif; background-color: #f9f9f9;">
+        <!-- Listing Header -->
+        <h2 style="text-align: center; margin-bottom: 20px; margin-top:50px; color: #333; font-weight: 600;">
+            📌 Details of <%= listing.title %>
+        </h2>
 
-<h2 style="text-align: center; margin-bottom: 10px; margin-top:50px; color: #333;">📌 Details of <%= listing.title %></h2>
+        <!-- Listing Card -->
+        <div
+            style="margin-top: 50px; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 14px rgba(0,0,0,0.15);">
 
-    <!-- Add spacing from navbar -->
-    <div style="margin-top: 80px; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-        
-        <!-- Image section -->
-        <div style="width: 100%; height: 300px; overflow: hidden;">
-            <img src="<%= listing.image ? listing.image.url : 'https://via.placeholder.com/600x300?text=No+Image' %>" 
-                 alt="Listing Image" 
-                 style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
+            <!-- Image -->
+            <div style="width: 100%; height: 350px; overflow: hidden;">
+                <img src="<%= listing.image ? listing.image.url : 'https://via.placeholder.com/700x350?text=No+Image' %>"
+                    alt="Listing Image" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
 
-        <!-- Details section -->
-        <div style="padding: 20px;">
-            
-            
-            <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="padding: 10px; border-bottom: 1px solid #eee;">
-                    <strong>Title:</strong> <%= listing.title %>
-                </li>
-                <li style="padding: 10px; border-bottom: 1px solid #eee;">
-                    <strong>Description:</strong> <%= listing.description %>
-                </li>
-                <li style="padding: 10px; border-bottom: 1px solid #eee;">
-                    <strong>Price:</strong> ₹ <%= listing.price.toLocaleString("en-IN") %>
-                </li>
-                <li style="padding: 10px; border-bottom: 1px solid #eee;">
-                    <strong>Location:</strong> <%= listing.location %>
-                </li>
-                <li style="padding: 10px;">
-                    <strong>Country:</strong> <%= listing.country %>
-                </li>
-            </ul>
+            <!-- Details -->
+            <div style="padding: 25px;">
 
-            <!-- Buttons -->
-            <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                <a href="/listing/edit/<%= listing._id %>">
-                    <button style="background: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">
-                        ✏️ Edit
-                    </button>
-                </a>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 16px; color: #444;">
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Title:</strong>
+                        <%= listing.title %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Description:</strong>
+                        <%= listing.description %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Price:</strong> ₹ <%= listing.price.toLocaleString("en-IN") %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Location:</strong>
+                        <%= listing.location %>
+                    </li>
+                    <li style="padding: 12px;">
+                        <strong>Country:</strong>
+                        <%= listing.country %>
+                    </li>
+                </ul>
 
-                <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE">
-                    <button type="submit" style="background: #dc3545; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">
-                        🗑️ Delete
-                    </button>
-                </form>
+                <!-- Action Buttons -->
+                <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+                    <a href="/listing/edit/<%= listing._id %>">
+                        <button
+                            style="background: #007bff; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                            ✏️ Edit
+                        </button>
+                    </a>
+
+                    <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE">
+                        <button type="submit"
+                            style="background: #dc3545; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                            🗑️ Delete
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</body>
+
+        <!-- Review Form -->
+        <div
+            style="max-width: 700px; margin: auto; background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 6px 14px rgba(0,0,0,0.12); margin-bottom: 40px;">
+            <h3 style="margin-bottom: 20px; color: #333; font-weight: 600;">💬 Leave a Review</h3>
+            <form method="POST" action="/listing/<%= listing._id %>/review" novalidate class="needs-validation">
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <input type="range" min="1" max="5" id="rating" name="review[rating]" class="form-range">
+                </div>
+                <div>
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment]" id="comment" class="form-control" rows="3" required></textarea>
+                    <div class="invalid-feedback">Enter a valid Comment!</div>
+                </div>
+                <button class="btn btn-dark mt-3">Submit</button>
+            </form>
+        </div>
+
+
+        <!-- All Reviews -->
+        <div style="max-width: 900px; margin: auto; margin-bottom: 50px;">
+            <h3 style="margin-bottom: 20px; color: #333; font-weight: 600;">⭐ All Reviews</h3>
+
+            <% if(listing.reviews.length===0){ %>
+                <p style="color: #777;">No reviews yet. Be the first to leave one!</p>
+                <% } %>
+
+                    <!-- Reviews Grid -->
+                    <div
+                        style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;">
+                        <% for(let review of listing.reviews){ %>
+                            <div class="card"
+                                style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; background: #fff;">
+                                <div class="card-body" style="padding: 0;">
+                                    <h6 class="card-subtitle mb-2 text-muted">Anonymous User</h6>
+                                    <p class="card-text" style="margin: 10px 0; color: #444;">
+                                        <%= review.comment %>
+                                    </p>
+                                    <p style="color: #f39c12; font-weight: 600; font-size: 15px;">
+                                        <%= review.rating %> ★
+                                    </p>
+                                </div>
+                                <form class="mt-2" method="POST"
+                                    action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE">
+                                    <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+                            </div>
+                            <% } %>
+                    </div>
+        </div>
+
+
+    </body>
