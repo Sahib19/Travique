@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js");
-const ExpressError = require("../utils/ExpressError.js") ;
+const ExpressError = require("../utils/ExpressError.js");
 //requiring the models
 const Listing = require("../models/listing.js");
 
@@ -33,7 +33,10 @@ router.get("/new", (req, res) => {
 router.get("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id).populate("reviews");
-    // console.log(listing);
+    if(!listing){
+        req.flash("error", "Oops ! Listing Not Found :( ");
+        return res.redirect("/listing");
+    }
     res.render("listings/show.ejs", { listing });
 }))
 
@@ -41,6 +44,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 router.post("/", validateListing, wrapAsync(async (req, res) => {
     let newlisting = Listing(req.body);
     await newlisting.save();
+    req.flash("success", "New Listing Created!");
     res.redirect("/listing");
 }))
 
@@ -48,6 +52,10 @@ router.post("/", validateListing, wrapAsync(async (req, res) => {
 router.get("/edit/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
+    if(!listing){
+        req.flash("error", "Oops ! Listing Not Found :( ");
+        return res.redirect("/listing");
+    }
     res.render("listings/editForm.ejs", { listing });
 }))
 
@@ -58,6 +66,7 @@ router.put("/update/:id", wrapAsync(async (req, res) => {
         throw new ExpressError(400, "Send valid Data"); // bad request due to client mistake
     }
     await Listing.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    req.flash("success", "Exiting Listing Updated!");
     res.redirect("/listing");
 
 }))
@@ -66,8 +75,9 @@ router.put("/update/:id", wrapAsync(async (req, res) => {
 router.delete("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
+    req.flash("error", "Listing Deleted!");
     res.redirect("/listing");
 
 }))
 
-module.exports = router ;
+module.exports = router;

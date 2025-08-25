@@ -6,12 +6,12 @@ app.use(methodOverride("_method"));
 const path = require("path");
 // const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js")
+const session = require("express-session");
+const flash = require("connect-flash");
 
 //allowing  hoppscotch
 const cors = require("cors");
 app.use(cors());
-
-app.use(express.static(path.join(__dirname, "public")));
 
 // joi walla validation
 // const { listingSchema , reviewSchema} = require("./schema.js");
@@ -24,14 +24,30 @@ const ejsMate = require("ejs-mate");
 // const Review = require("./models/review.js");
 
 //Requiring the Router Object
-const listing = require("./routes/listing.js"); 
-const review = require("./routes/review.js"); 
+const listing = require("./routes/listing.js");
+const review = require("./routes/review.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
+
+const sessionOptions = {
+    secret: "mysupersecretkey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true
+    }
+};
+
+
+app.use(session(sessionOptions));
+app.use(flash());
+
 
 //--------------------------------------------------------------------------------------------------------------
 
@@ -48,10 +64,17 @@ main()
     })
     .catch(err => console.log(err));
 
+
+app.use((req,res,next)=>{
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
+
 // listing routers
-app.use("/listing", listing );
+app.use("/listing", listing);
 // review routers
-app.use("/listing/:id/review" , review)
+app.use("/listing/:id/review", review)
 
 app.all("/", (req, res, next) => {
     next(new ExpressError(404, "Page not Found"));
