@@ -26,12 +26,32 @@ const ejsMate = require("ejs-mate");
 //Requiring the Router Object
 const listing = require("./routes/listing.js");
 const review = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
+
+//Requiring things related to authentication and authorization
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
+
+//--------------------------------------------------------------------------------------------------------------
+// connecting with mongo
+async function main() {
+    // below line will return a promise
+    await mongoose.connect('mongodb://127.0.0.1:27017/Wonderlust');
+}
+
+main()
+    .then(() => {
+        console.log("Connection Built Sucessfully");
+    })
+    .catch(err => console.log(err));
+//============================================================================================================
 
 const sessionOptions = {
     secret: "mysupersecretkey",
@@ -48,33 +68,38 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-
-//--------------------------------------------------------------------------------------------------------------
-
-
-// connecting with mongo
-async function main() {
-    // below line will return a promise
-    await mongoose.connect('mongodb://127.0.0.1:27017/Wonderlust');
-}
-
-main()
-    .then(() => {
-        console.log("Connection Built Sucessfully");
-    })
-    .catch(err => console.log(err));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
-app.use((req,res,next)=>{
+
+
+app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     next();
 })
 
+// app.get("/demouser", async (req, res) => {
+//     let User1 = new User({   
+//         email: "sahibs7868@gmail.com",
+//         username: "sahib"  
+//     });
+//     const result = await User.register(User1, "Sahib12345");
+//     res.send(result);
+// })
+
 // listing routers
 app.use("/listing", listing);
-// review routers
-app.use("/listing/:id/review", review)
+// review routers;
+app.use("/listing/:id/review", review);
+
+// User routers
+app.use("/user", userRouter);
 
 app.all("/", (req, res, next) => {
     next(new ExpressError(404, "Page not Found"));
