@@ -69,11 +69,6 @@ h1 {
     transform: translateY(-2px);
 }
 
-#navbarNavAltMarkup{
-    justify-content: end !important; 
-}
-
-
 /* ---------------- Footer ---------------- */
 .f-info {
     width: 100%;

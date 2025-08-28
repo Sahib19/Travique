@@ -1,24 +1,50 @@
 <% layout("/layouts/boilerplate") %>
 
-    <div class="row mt-5">
-        <div class="col-6 offset-3"><p>Login</p></div>
-        <div class="col-6 offset-3">
-            <form method="POST" action="/user/login" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input name="username" id="username" placeholder="Username" class="form-control" type="text" required>
-                </div>
+<div class="d-flex justify-content-center align-items-center " style="margin-top: 80px;">
+  <div class="card shadow-lg p-4 rounded-4" style="width: 28rem;">
+    <h3 class="text-center mb-4">
+      <span style="color: #FF385C; font-weight: bold;">Login</span> to 
+      <span style="color: #FF385C; font-weight: bold;">WonderLust</span>
+    </h3>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input name="password" id="password" placeholder="password" class="form-control" type="password" required>
-                    <div class="invalid-feedback">
-                        Please set a password.
-                    </div>
+    <form method="POST" action="/user/login" class="needs-validation" novalidate>
+      
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input 
+          name="username" 
+          id="username" 
+          placeholder="Enter your username" 
+          class="form-control" 
+          type="text" 
+          required>
+      </div>
 
-                </div>
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input 
+          name="password" 
+          id="password" 
+          placeholder="Enter your password" 
+          class="form-control" 
+          type="password" 
+          required>
+        <div class="invalid-feedback">Please enter your password.</div>
+      </div>
 
-                <button class="btn btn-dark">Login</button>
-            </form>
-        </div>
-    </div>
+      <!-- Login Button -->
+      <button class="btn w-100 rounded-pill text-white" style="background-color: #FF385C;">Login</button>
+      
+      <!-- Signup Link -->
+      <div class="text-center mt-3">
+        <small>New user? 
+          <a href="/user/signup" style="color: #FF385C; text-decoration: none; font-weight: 500;">
+            Create a new account
+          </a>
+        </small>
+      </div>
+    </form>
+  </div>
+</div>
