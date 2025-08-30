@@ -16,7 +16,7 @@
                             </h2>
 
                             <!-- Form -->
-                            <form method="POST" action="/listing" class="needs-validation" novalidate>
+                            <form method="POST" action="/listing" class="needs-validation" novalidate enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
                                     <input name="title" placeholder="Enter title" class="form-control" required>
@@ -50,8 +50,8 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="image" class="form-label">Image URL</label>
-                                    <input name="image" placeholder="Enter image url" class="form-control">
+                                    <label for="image" class="form-label">Upload Image</label>
+                                    <input name="image" type="file" class="form-control">
                                 </div>
 
                                 <div class="row">
