@@ -7,7 +7,7 @@ const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
 
 //requiring the middle to check user doing somehting is authenticated ot not
-const {isLoggedIn , isOwner , validateListing} = require("../middleware.js");
+const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
 
 //show route
@@ -17,16 +17,15 @@ router.get("/", wrapAsync(async (req, res) => {
 }))
 
 //render form to create the new route
-router.get("/new", isLoggedIn ,(req, res) => { 
+router.get("/new", isLoggedIn, (req, res) => {
     res.render("listings/form.ejs");
 })
 
 // showing a particular Listing in big page
 router.get("/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("reviews").populate("owner");
-    console.log(listing)
-    if(!listing){
+    const listing = await Listing.findById(id).populate({ path: "reviews", populate: { path: "author" }, }).populate("owner");
+    if (!listing) {
         req.flash("error", "Oops ! Listing Not Found :( ");
         return res.redirect("/listing");
     }
@@ -43,10 +42,10 @@ router.post("/", validateListing, wrapAsync(async (req, res) => {
 }))
 
 //Rendering the form to edit the existing listing
-router.get("/edit/:id", isLoggedIn ,isOwner, wrapAsync(async (req, res) => {
+router.get("/edit/:id", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
-    if(!listing){
+    if (!listing) {
         req.flash("error", "Oops ! Listing Not Found :( ");
         return res.redirect("/listing");
     }
@@ -54,7 +53,7 @@ router.get("/edit/:id", isLoggedIn ,isOwner, wrapAsync(async (req, res) => {
 }))
 
 //changing the update in the database
-router.put("/update/:id",isOwner, wrapAsync(async (req, res) => {
+router.put("/update/:id", isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params
     if (!req.body) {
         throw new ExpressError(400, "Send valid Data"); // bad request due to client mistake
@@ -66,7 +65,7 @@ router.put("/update/:id",isOwner, wrapAsync(async (req, res) => {
 }))
 
 //delete roooute
-router.delete("/:id",isLoggedIn ,isOwner, wrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndDelete(id);
     req.flash("error", "Listing Deleted!");

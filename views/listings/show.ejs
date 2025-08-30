@@ -69,6 +69,7 @@
         </div>
 
         <!-- Review Form -->
+         <% if(currentUser) { %>
         <div
             style="max-width: 700px; margin: auto; background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 6px 14px rgba(0,0,0,0.12); margin-bottom: 40px;">
             <h3 style="margin-bottom: 20px; color: #333; font-weight: 600;">💬 Leave a Review</h3>
@@ -85,6 +86,7 @@
                 <button class="btn btn-dark mt-3">Submit</button>
             </form>
         </div>
+        <% } %>
 
 
         <!-- All Reviews -->
@@ -102,7 +104,7 @@
                             <div class="card"
                                 style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; background: #fff;">
                                 <div class="card-body" style="padding: 0;">
-                                    <h6 class="card-subtitle mb-2 text-muted">Anonymous User</h6>
+                                    <h6 class="card-subtitle mb-2 text-muted">@<%= review.author.username %></h6>
                                     <p class="card-text" style="margin: 10px 0; color: #444;">
                                         <%= review.comment %>
                                     </p>
@@ -110,10 +112,12 @@
                                         <%= review.rating %> ★
                                     </p>
                                 </div>
+                                 <% if(currentUser && currentUser._id.equals(review.author._id)) {%>
                                 <form class="mt-2" method="POST"
                                     action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE">
                                     <button class="btn btn-sm btn-outline-danger">Delete</button>
                                 </form>
+                                <% } %>
                             </div>
                             <% } %>
                     </div>

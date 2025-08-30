@@ -1,4 +1,5 @@
 const Listing = require("./models/listing");
+const Review = require("./models//review.js");
 const { listingSchema , reviewSchema } = require("./schema.js");
 const ExpressError = require("./utils/ExpressError.js") ;
 
@@ -22,6 +23,17 @@ module.exports.isOwner = async (req, res, next) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     if (!(res.locals.currentUser && res.locals.currentUser._id.equals(listing.owner._id))) {
+        req.flash("error", "You don't have the Permission !!!!")
+        return res.redirect(`/listing/${id}`);
+    }
+    next();
+
+}
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+    let {id, reviewId  } = req.params;
+    let review = await Review.findById(reviewId);
+    if (!(review.author.equals(res.locals.currentUser._id))) {
         req.flash("error", "You don't have the Permission !!!!")
         return res.redirect(`/listing/${id}`);
     }
