@@ -45,28 +45,50 @@ h1 {
     transform: translateY(-2px);
 }
 
-.nav-header{
+.nav-header {
     display: flex;
     flex-direction: row;
 }
 
-.nav-name{
+.nav-name {
     position: relative;
-    font-weight: 600 ;
-    font-size: 1.3rem; 
+    font-weight: 600;
+    font-size: 1.3rem;
     padding: 0.6rem 1rem;
 }
 
-.nav-logo{
+.nav-logo {
     position: relative;
     left: 22px;
     top: 5px;
 }
 
-.nav-name:hover{
+.nav-name:hover {
     cursor: pointer;
     color: #FF385C !important;
     transform: translateY(-2px);
+}
+
+.nav-ls-button {
+    text-decoration: none !important;
+    color: #222222 ;
+    font-weight: 500;
+    margin: 0 9px  !important;
+    transition: color 0.3s ease, transform 0.2s ease;
+    border: 2px solid #FF385C ;
+    border-radius: 20px ;
+    padding-top: 5px;
+    padding-left: 15px  ;
+    padding-right: 15px  ;
+    
+
+}
+
+.nav-ls-button:hover{
+    transform: translateY(-2px);
+    background-color: #FF385C;
+    color: black ;
+    transition: color 0.3s ease, transform 0.2s ease !important;
 }
 
 /* ---------------- Footer ---------------- */
@@ -155,55 +177,54 @@ h1 {
 
 /* maps */
 .map-container {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 25px;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
 .map-heading {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
 }
 
 .map-title {
-  font-weight: 400;
-  color: #333;
-  margin-bottom: 18px;
-  display: flex;
-  align-items: center;
+    font-weight: 400;
+    color: #333;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
 }
 
 #map {
-  height: 400px;
-  width: 100%;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    height: 400px;
+    width: 100%;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
 #map-message {
-  margin-top: 15px;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 500;
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 #map-message.error {
-  background: #ffeaea;
-  color: #d9534f;
-  border: 1px solid #f5c2c7;
+    background: #ffeaea;
+    color: #d9534f;
+    border: 1px solid #f5c2c7;
 }
 
 #map-message.success {
-  background: #eaffea;
-  color: #2e7d32;
-  border: 1px solid #b6e2b6;
+    background: #eaffea;
+    color: #2e7d32;
+    border: 1px solid #b6e2b6;
 }
-

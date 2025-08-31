@@ -10,21 +10,20 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link " aria-current="page" href="/listing">Home</a>
-                <a class="nav-link" href="/listing">Listing</a>
-                <a class="nav-link" href="/listing/new">Add new listing</a>
+                <a class="nav-link " href="/listing">Explore ✈️</a>
             </div>
 
             <div class="navbar-nav ms-auto">
-
+                <a class="nav-link" href="/listing/new">➕ Add Destination</a>
                 <% if(!currentUser) { %>
-                    <a class="nav-link " aria-current="page" href="/user/signup">Signup</a>
-                    <a class="nav-link" href="/user/login">login </a>
+
+                    <a class="nav-ls-button" aria-current="page" href="/user/signup">Signup</a>
+                    <a class="nav-ls-button" href="/user/login">login </a>
 
                     <% } %>
                     
                         <% if(currentUser) { %>
-                            <a class="nav-link" href="/user/logout">Logout</a>
+                            <a class="nav-ls-button" href="/user/logout">Logout</a>
                             <% } %>
 
             </div>
