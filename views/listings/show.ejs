@@ -1,160 +1,183 @@
 <% layout("/layouts/boilerplate") %>
 
-<body style="font-family: Arial, sans-serif; background-color: #f5f7fa;">
+    <body style="font-family: Arial, sans-serif; background-color: #f5f7fa;">
 
-    <!-- Listing Header -->
-    <h2 style="text-align: center; margin-bottom: 20px; margin-top:50px; color: #333; font-weight: 600;">
-        📌 Details of <%= listing.title %>
-    </h2>
+        <!-- passing data maps.js -->
+        <script>
+            const maptoken = "<%= process.env.MAPS_API_KEY %>"
+            const listingLocation = "<%= listing.location %>"
+            const listingTitle = "<%= listing.title %>"
+        </script>
 
-    <!-- Listing Card -->
-    <div
-        style="margin-top: 50px; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 14px rgba(0,0,0,0.15);">
+        <!-- Listing Header -->
+        <h2 style="text-align: center; margin-bottom: 20px; margin-top:50px; color: #333; font-weight: 600;">
+            📌 Details of <%= listing.title %>
+        </h2>
 
-        <!-- Image -->
-        <div style="width: 100%; height: 350px; overflow: hidden;">
-            <img src="<%= listing.image ? listing.image.url : 'https://via.placeholder.com/700x350?text=No+Image' %>"
-                alt="Listing Image" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-
-        <!-- Details -->
-        <div style="padding: 25px;">
-
-            <ul style="list-style: none; padding: 0; margin: 0; font-size: 16px; color: #444;">
-
-                <li style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <strong>Created By:</strong>
-                    <%= listing.owner.username%>
-                </li>
-                <li style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <strong>Title:</strong>
-                    <%= listing.title %>
-                </li>
-                <li style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <strong>Description:</strong>
-                    <%= listing.description %>
-                </li>
-                <li style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <strong>Price:</strong> ₹ <%= listing.price.toLocaleString("en-IN") %>
-                </li>
-                <li style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <strong>Location:</strong>
-                    <%= listing.location %>
-                </li>
-                <li style="padding: 12px;">
-                    <strong>Country:</strong>
-                    <%= listing.country %>
-                </li>
-            </ul>
-
-            <!-- Action Buttons -->
-            <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
-                <div style="display: flex; justify-content: space-between; margin-top: 25px;">
-                    <a href="/listing/edit/<%= listing._id %>">
-                        <button
-                            style="background: #007bff; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
-                            ✏️ Edit
-                        </button>
-                    </a>
-
-                    <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE">
-                        <button type="submit"
-                            style="background: #dc3545; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
-                            🗑️ Delete
-                        </button>
-                    </form>
-                </div>
-                <% } %>
-        </div>
-    </div>
-
-    <!-- Redesigned Review Form -->
-    <% if(currentUser) { %>
+        <!-- Listing Card -->
         <div
-            style="max-width: 700px; margin: auto; background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 6px 14px rgba(0,0,0,0.12); margin-bottom: 40px;">
-            
-            <h3 style="margin-bottom: 15px; color: #333; font-weight: 600;">💬 Leave a Review</h3>
-            <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Your feedback helps others know more about this Place.</p>
+            style="margin-top: 50px; margin-bottom: 50px; max-width: 700px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 14px; overflow: hidden; box-shadow: 0 6px 14px rgba(0,0,0,0.15);">
 
-            <form method="POST" action="/listing/<%= listing._id %>/review" novalidate class="needs-validation">
+            <!-- Image -->
+            <div style="width: 100%; height: 350px; overflow: hidden;">
+                <img src="<%= listing.image ? listing.image.url : 'https://via.placeholder.com/700x350?text=No+Image' %>"
+                    alt="Listing Image" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
 
-                <!-- Rating Section -->
-                <div style="margin-bottom: 20px;">
-                    <label for="rating" class="form-label" style="font-weight: 500; display: block; margin-bottom: 6px;">Your Rating</label>
-                    <div style="transform: scale(0.9); transform-origin: left; display: inline-block; margin-top: 5px;">
-                        <fieldset class="starability-slot">
-                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
-                                checked aria-label="No rating." />
-                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                            <label for="first-rate1" title="Terrible">1 star</label>
-                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                            <label for="first-rate2" title="Not good">2 stars</label>
-                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                            <label for="first-rate3" title="Average">3 stars</label>
-                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                            <label for="first-rate4" title="Very good">4 stars</label>
-                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                            <label for="first-rate5" title="Amazing">5 stars</label>
-                        </fieldset>
-                    </div>
-                </div>
+            <!-- Details -->
+            <div style="padding: 25px;">
 
-                <!-- Comment Section -->
-                <div style="margin-bottom: 20px;">
-                    <label for="comment" class="form-label" style="font-weight: 500; display: block; margin-bottom: 6px;">Your Review</label>
-                    <textarea name="review[comment]" id="comment" class="form-control"
-                        style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 12px; font-size: 15px;"
-                        rows="4" placeholder="Write your thoughts here..." required></textarea>
-                    <div class="invalid-feedback">Please write a review before submitting.</div>
-                </div>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 16px; color: #444;">
 
-                <button class="btn btn-dark" style="padding: 10px 22px; border-radius: 8px; font-weight: 500;">Submit Review</button>
-            </form>
-        </div>
-    <% } %>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Created By:</strong>
+                        <%= listing.owner.username%>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Title:</strong>
+                        <%= listing.title %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Description:</strong>
+                        <%= listing.description %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Price:</strong> ₹ <%= listing.price.toLocaleString("en-IN") %>
+                    </li>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Location:</strong>
+                        <%= listing.location %>
+                    </li>
+                    <li style="padding: 12px;">
+                        <strong>Country:</strong>
+                        <%= listing.country %>
+                    </li>
+                </ul>
 
-    <!-- All Reviews -->
-    <!-- set - "max-width: 900px; to makeit as old :) -->
-    <div style="max-width: full; margin: auto; margin-bottom: 50px;">
-        <h3 style="margin-bottom: 20px; color: #333; font-weight: 600;">⭐ All Reviews</h3>
+                <!-- Action Buttons -->
+                <% if(currentUser && currentUser._id.equals(listing.owner._id)) {%>
+                    <div style="display: flex; justify-content: space-between; margin-top: 25px;">
+                        <a href="/listing/edit/<%= listing._id %>">
+                            <button
+                                style="background: #007bff; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                                ✏️ Edit
+                            </button>
+                        </a>
 
-        <% if(listing.reviews.length===0){ %>
-            <p style="color: #777;">No reviews yet. Be the first to leave one!</p>
-        <% } %>
-
-        <!-- Reviews Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;">
-            <% for(let review of listing.reviews){ %>
-                <div class="card"
-                    style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; background: #fff; display: flex; flex-direction: column; justify-content: space-between;">
-
-                    <!-- Review Content -->
-                    <div>
-                        <h6 class="card-subtitle mb-2 text-muted" style="margin-bottom: 8px;">
-                            @<%= review.author.username %>
-                        </h6>
-
-                        <!-- Stars -->
-                        <p class="starability-result" data-rating="<%= review.rating %>"
-                            style="transform: scale(0.85); transform-origin: left; display: inline-block; margin-bottom: 8px; color: #f39c12; font-weight: 600; font-size: 15px;">
-                        </p>
-
-                        <!-- Comment -->
-                        <p class="card-text" style="margin: 0; color: #444; line-height: 1.4;">
-                            <%= review.comment %>
-                        </p>
-                    </div>
-
-                    <!-- Delete Button -->
-                    <% if(currentUser && currentUser._id.equals(review.author._id)) {%>
-                        <form class="mt-3" method="POST"
-                            action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE">
-                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE">
+                            <button type="submit"
+                                style="background: #dc3545; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                                🗑️ Delete
+                            </button>
                         </form>
+                    </div>
                     <% } %>
-                </div>
-            <% } %>
+            </div>
         </div>
-    </div>
 
-</body>
+        <!-- Redesigned Review Form -->
+        <% if(currentUser) { %>
+            <div
+                style="max-width: 700px; margin: auto; background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 6px 14px rgba(0,0,0,0.12); margin-bottom: 40px;">
+
+                <h3 style="margin-bottom: 15px; color: #333; font-weight: 600;">💬 Leave a Review</h3>
+                <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Your feedback helps others know more about
+                    this Place.</p>
+
+                <form method="POST" action="/listing/<%= listing._id %>/review" novalidate class="needs-validation">
+
+                    <!-- Rating Section -->
+                    <div style="margin-bottom: 20px;">
+                        <label for="rating" class="form-label"
+                            style="font-weight: 500; display: block; margin-bottom: 6px;">Your Rating</label>
+                        <div
+                            style="transform: scale(0.9); transform-origin: left; display: inline-block; margin-top: 5px;">
+                            <fieldset class="starability-slot">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                    checked aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <!-- Comment Section -->
+                    <div style="margin-bottom: 20px;">
+                        <label for="comment" class="form-label"
+                            style="font-weight: 500; display: block; margin-bottom: 6px;">Your Review</label>
+                        <textarea name="review[comment]" id="comment" class="form-control"
+                            style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 12px; font-size: 15px;"
+                            rows="4" placeholder="Write your thoughts here..." required></textarea>
+                        <div class="invalid-feedback">Please write a review before submitting.</div>
+                    </div>
+
+                    <button class="btn btn-dark"
+                        style="padding: 10px 22px; border-radius: 8px; font-weight: 500;">Submit Review</button>
+                </form>
+            </div>
+            <% } %>
+
+                <!-- All Reviews -->
+                <!-- set - "max-width: 900px; to makeit as old :) -->
+                <div style="max-width: full; margin: auto; margin-bottom: 50px;">
+                    <h3 style="margin-bottom: 20px; color: #333; font-weight: 600;">⭐ All Reviews</h3>
+
+                    <% if(listing.reviews.length===0){ %>
+                        <p style="color: #777;">No reviews yet. Be the first to leave one!</p>
+                        <% } %>
+
+                            <!-- Reviews Grid -->
+                            <div
+                                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;">
+                                <% for(let review of listing.reviews){ %>
+                                    <div class="card"
+                                        style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; background: #fff; display: flex; flex-direction: column; justify-content: space-between;">
+
+                                        <!-- Review Content -->
+                                        <div>
+                                            <h6 class="card-subtitle mb-2 text-muted" style="margin-bottom: 8px;">
+                                                @<%= review.author.username %>
+                                            </h6>
+
+                                            <!-- Stars -->
+                                            <p class="starability-result" data-rating="<%= review.rating %>"
+                                                style="transform: scale(0.85); transform-origin: left; display: inline-block; margin-bottom: 8px; color: #f39c12; font-weight: 600; font-size: 15px;">
+                                            </p>
+
+                                            <!-- Comment -->
+                                            <p class="card-text" style="margin: 0; color: #444; line-height: 1.4;">
+                                                <%= review.comment %>
+                                            </p>
+                                        </div>
+
+                                        <!-- Delete Button -->
+                                        <% if(currentUser && currentUser._id.equals(review.author._id)) {%>
+                                            <form class="mt-3" method="POST"
+                                                action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE">
+                                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </form>
+                                            <% } %>
+                                    </div>
+                                    <% } %>
+                            </div>
+
+                            <!-- Maps Section -->
+                            <div class="map-container">
+                                <h3 class="map-heading">📍 Where you’ll be</h3>
+                                <h5 class="map-title"><%= listing.title  %></h2>
+
+                                <div id="map"></div>
+                                <div id="map-message"></div>
+                            </div>
+                </div>
+                <script src="/js/maps.js"></script>
+
+    </body>

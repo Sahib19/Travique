@@ -1,6 +1,8 @@
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError.js");
 
+const {getResizedImageUrl} = require("../utils/resizeImages.js");
+
 module.exports.index = async (req, res) => {
     const allListing = await Listing.find({});
     res.render("listings/index.ejs", { allListing });
@@ -23,10 +25,9 @@ module.exports.showRoute = async (req, res) => {
 module.exports.createNewListing = async (req, res) => {
     let url = req.file.path;
     let filename = req.file.filename;
-
     let newlisting = Listing(req.body);
     newlisting.owner = req.user._id;
-    newlisting.image = {url,filename};
+    newlisting.image = { url, filename };
     await newlisting.save();
     req.flash("success", "New Listing Created!");
     res.redirect("/listing");
@@ -39,7 +40,12 @@ module.exports.editForm = async (req, res) => {
         req.flash("error", "Oops ! Listing Not Found :( ");
         return res.redirect("/listing");
     }
-    res.render("listings/editForm.ejs", { listing })
+    let originalImageUrl = listing.image.url;
+    let resizeImageUrl =  getResizedImageUrl(originalImageUrl);
+
+    // originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
+
+    res.render("listings/editForm.ejs", { listing , resizeImageUrl})
 };
 
 module.exports.updateListingInDb = async (req, res) => {
@@ -47,8 +53,15 @@ module.exports.updateListingInDb = async (req, res) => {
     if (!req.body) {
         throw new ExpressError(400, "Send valid Data"); // bad request due to client mistake
     }
-    console.log(req.body);
-    await Listing.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    let listing = await Listing.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+
+    //Changing the New images uploaded through editForm
+    if (typeof req.file != "undefined") {
+        let url = req.file.path;
+        let filename = req.file.filename;
+        listing.image = { url, filename };
+        await listing.save();
+    }
     req.flash("success", "Exiting Listing Updated!");
     res.redirect(`/listing/${id}`);
 }

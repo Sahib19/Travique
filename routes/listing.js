@@ -36,6 +36,10 @@ router.route("/:id")
 router.get("/edit/:id", isLoggedIn, isOwner, wrapAsync(listingController.editForm))
 
 //changing the update in the database
-router.put("/update/:id", isOwner, wrapAsync((listingController.updateListingInDb)));
+router.put("/update/:id",
+    isLoggedIn, 
+    isOwner, 
+    upload.single("image"),
+    wrapAsync((listingController.updateListingInDb)));
 
 module.exports = router;

@@ -9,7 +9,8 @@
             <h2 style="text-align: center; margin-bottom: 20px; color: #333;">✏️ Update Details</h2>
 
             <form method="POST" action="/listing/update/<%= listing._id %>?_method=PUT"
-                style="display: flex; flex-direction: column; gap: 15px;" class="needs-validation" novalidate>
+                style="display: flex; flex-direction: column; gap: 15px;" class="needs-validation" novalidate
+                enctype="multipart/form-data">
 
                 <div>
                     <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Title</label>
@@ -46,11 +47,22 @@
                     </div>
                 </div>
 
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <label style="font-weight: bold; color: #444; margin-bottom: 5px;">Current Listing Image</label>
+                    <div
+                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; text-align: center;">
+                        <img src="<%= resizeImageUrl %>" alt="Original listing image"
+                            style="max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+
+
+
                 <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Image URL</label>
-                    <input name="image.url" placeholder="Enter image url"
-                        value="<%= listing.image.url %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Upload New
+                        Image</label>
+                    <input name="image" value="<%= listing.image.url %>"
+                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" type="file">
                 </div>
 
                 <div>
@@ -58,7 +70,7 @@
                     <input name="location" placeholder="Enter location" value="<%= listing.location %>"
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
 
-                        <div class="invalid-feedback">
+                    <div class="invalid-feedback">
                         Please give a valid location.
                     </div>
                 </div>
@@ -68,7 +80,7 @@
                     <input name="country" placeholder="Enter country" value="<%= listing.country %>"
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
 
-                        <div class="invalid-feedback">
+                    <div class="invalid-feedback">
                         Please give a valid country.
                     </div>
                 </div>
