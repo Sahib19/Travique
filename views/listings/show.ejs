@@ -44,6 +44,13 @@
                     <li style="padding: 12px; border-bottom: 1px solid #eee;">
                         <strong>Price:</strong> ₹ <%= listing.price.toLocaleString("en-IN") %>
                     </li>
+
+                    <% if(listing.category){ %>
+                    <li style="padding: 12px; border-bottom: 1px solid #eee;">
+                        <strong>Category:</strong> <%= listing.category %>
+                    </li>
+
+                    <% } %>
                     <li style="padding: 12px; border-bottom: 1px solid #eee;">
                         <strong>Location:</strong>
                         <%= listing.location %>

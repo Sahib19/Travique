@@ -16,7 +16,8 @@
                             </h2>
 
                             <!-- Form -->
-                            <form method="POST" action="/listing" class="needs-validation" novalidate enctype="multipart/form-data">
+                            <form method="POST" action="/listing" class="needs-validation" novalidate
+                                enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Title</label>
                                     <input name="title" placeholder="Enter title" class="form-control" required>
@@ -41,8 +42,7 @@
 
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Price</label>
-                                    <input name="price"  placeholder="Enter price" class="form-control"
-                                        required>
+                                    <input name="price" placeholder="Enter price" class="form-control" required>
 
                                     <div class="invalid-feedback">
                                         Please give a valid price.
@@ -52,6 +52,29 @@
                                 <div class="mb-3">
                                     <label for="image" class="form-label">Upload Image</label>
                                     <input name="image" type="file" class="form-control">
+                                </div>
+
+                                <!-- New Category Dropdown -->
+                                <div class="mb-3">
+                                    <label for="category" class="form-label">Category</label>
+                                    <select name="category" class="form-select" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="Trending">Trending</option>
+                                        <option value="Rooms">Rooms</option>
+                                        <option value="Iconic Cities">Iconic Cities</option>
+                                        <option value="Mountains">Mountains</option>
+                                        <option value="Forest">Forest</option>
+                                        <option value="Heritage Sites">Heritage Sites</option>
+                                        <option value="Castles">Castles</option>
+                                        <option value="Beaches">Beaches</option>
+                                        <option value="Camping">Camping</option>
+                                        <option value="Farms">Farms</option>
+                                        <option value="Arctic">Artic</option>
+                                    </select>
+
+                                    <div class="invalid-feedback">
+                                        Please select a valid category.
+                                    </div>
                                 </div>
 
                                 <div class="row">

@@ -10,7 +10,7 @@ const upload = multer({ storage})
 
 
 //requiring the middle to check user doing somehting is authenticated ot not
-const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const { isLoggedIn, isOwner, validateListing , resetFilter} = require("../middleware.js");
 
 //requiring the differeny controllers
 const listingController = require("../Controllers/listing.js");

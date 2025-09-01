@@ -64,31 +64,61 @@
                     <input name="image" value="<%= listing.image.url %>"
                         style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" type="file">
                 </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Change
+                            Category</label>
 
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Location</label>
-                    <input name="location" placeholder="Enter location" value="<%= listing.location %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+                        <select name="category" class="form-select"
+                            style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+                            <option value="<%= listing.category %>" selected>
+                                <%= listing.category %>
+                            </option>
+                            <option value="Trending">Trending</option>
+                            <option value="Rooms">Rooms</option>
+                            <option value="Iconic Cities">Iconic Cities</option>
+                            <option value="Mountains">Mountains</option>
+                            <option value="Forest">Forest</option>
+                            <option value="Heritage Sites">Heritage Sites</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Beaches">Beaches</option>
+                            <option value="Camping">Camping</option>
+                            <option value="Farms">Farms</option>
+                            <option value="Artic">Arctic</option>
+                        </select>
 
-                    <div class="invalid-feedback">
-                        Please give a valid location.
+                        <div class="invalid-feedback">
+                            Please choose valid category.
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Country</label>
-                    <input name="country" placeholder="Enter country" value="<%= listing.country %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+                        <div>
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Location</label>
+                            <input name="location" placeholder="Enter location" value="<%= listing.location %>"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"
+                                required>
 
-                    <div class="invalid-feedback">
-                        Please give a valid country.
-                    </div>
-                </div>
+                            <div class="invalid-feedback">
+                                Please give a valid location.
+                            </div>
+                        </div>
 
-                <button type="submit"
-                    style="margin-top: 10px; background: #28a745; color: white; font-weight: bold; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
-                    ✅ Submit
-                </button>
+                        <div>
+                            <label
+                                style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Country</label>
+                            <input name="country" placeholder="Enter country" value="<%= listing.country %>"
+                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"
+                                required>
+
+                            <div class="invalid-feedback">
+                                Please give a valid country.
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            style="margin-top: 10px; background: #28a745; color: white; font-weight: bold; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
+                            ✅ Submit
+                        </button>
             </form>
         </div>
 

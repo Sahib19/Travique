@@ -23,6 +23,7 @@ h1 {
     background-color: #ffffff !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     padding: 0.6rem 1rem;
+    height: 5rem;
 }
 
 .navbar-brand {
@@ -33,12 +34,13 @@ h1 {
     gap: 6px;
 }
 
-.nav-link {
+/* can be remove below class */
+/* .nav-link {
     color: #222222 !important;
     font-weight: 500;
     margin: 0 6px;
     transition: color 0.3s ease, transform 0.2s ease;
-}
+} */
 
 .nav-link:hover {
     color: #FF385C !important;
@@ -70,26 +72,56 @@ h1 {
 }
 
 .nav-ls-button {
-    text-decoration: none !important;
-    color: #222222 ;
-    font-weight: 500;
-    margin: 0 9px  !important;
-    transition: color 0.3s ease, transform 0.2s ease;
-    border: 2px solid #FF385C ;
-    border-radius: 20px ;
-    padding-top: 5px;
-    padding-left: 15px  ;
-    padding-right: 15px  ;
-    
-
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #FF385C;
+    font-weight: 400;
+    margin: 0 9px;
+    border: 1px solid #FF385C;
+    border-radius: 20px;
+    padding: 7px 15px;
+    transition: color 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
 }
 
-.nav-ls-button:hover{
-    transform: translateY(-2px);
+.nav-ls-button:hover {
+    transform: translateY(-4px);
     background-color: #FF385C;
-    color: black ;
-    transition: color 0.3s ease, transform 0.2s ease !important;
+    color: white;
+    /* better contrast */
 }
+
+.nav-ls-button i {
+    margin-left: 0.3rem;
+}
+
+.fa-plane-up,
+.fa-plus {
+    margin-right: 0.4rem;
+}
+
+.search-input {
+    border-radius: 20px !important;
+    padding: 0.5rem 1.7rem 0.5rem 1.7rem !important;
+}
+
+.search-button {
+    color: #FF385C;
+    border-radius: 20px !important;
+    padding: 0.5rem 1.5rem 0.5rem 1.5rem !important;
+}
+
+.search-button:hover {
+    background-color: #FF385C !important;
+    color: white !important;
+
+}
+
+.search-icon {
+    display: inline !important;
+    margin-right: 0.7rem;
+}
+
 
 /* ---------------- Footer ---------------- */
 .f-info {
@@ -227,4 +259,36 @@ h1 {
     background: #eaffea;
     color: #2e7d32;
     border: 1px solid #b6e2b6;
+}
+
+/* css for filters */
+#filters {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+}
+
+.filter {
+    font-size: 1.05rem;
+    text-align: center;
+    margin-right: 1.5rem;
+    opacity: 0.7;
+    transition: transform 0.2s ease;
+}
+
+.filter:hover {
+    opacity: 1;
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    transform: translateY(-3px);
+}
+
+.filter-active{
+    opacity: 1;
+    border-bottom: 1px solid black;
+}
+
+.filter p {
+    font-size: 0.9rem;
 }

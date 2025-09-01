@@ -1,11 +1,18 @@
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError.js");
 
-const {getResizedImageUrl} = require("../utils/resizeImages.js");
+const { getResizedImageUrl } = require("../utils/resizeImages.js");
 
 module.exports.index = async (req, res) => {
-    const allListing = await Listing.find({});
-    res.render("listings/index.ejs", { allListing });
+    const category = req.query.category;
+    let allListing = {};
+    if (!category || category === "All") {
+        allListing = await Listing.find({});
+    } else {
+        allListing = await Listing.find({ category: category });
+    }
+
+    res.render("listings/index.ejs", {allListing });
 }
 
 module.exports.renderNewForm = (req, res) => {
@@ -41,11 +48,11 @@ module.exports.editForm = async (req, res) => {
         return res.redirect("/listing");
     }
     let originalImageUrl = listing.image.url;
-    let resizeImageUrl =  getResizedImageUrl(originalImageUrl);
+    let resizeImageUrl = getResizedImageUrl(originalImageUrl);
 
     // originalImageUrl = originalImageUrl.replace("/upload", "/upload/w_250");
 
-    res.render("listings/editForm.ejs", { listing , resizeImageUrl})
+    res.render("listings/editForm.ejs", { listing, resizeImageUrl })
 };
 
 module.exports.updateListingInDb = async (req, res) => {
