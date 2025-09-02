@@ -104,6 +104,10 @@ app.use((req, res, next) => {
     next();
 })
 
+app.get("/", (req, res) => {
+  res.redirect("/listing");  // or render your home.ejs
+});
+
 // listing routers
 app.use("/listing", listing);
 // review routers;
