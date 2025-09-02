@@ -5,7 +5,7 @@
                 <a class="navbar-brand" href="/listing">
                     <i class="fa-solid fa-compass"></i></a>
             </div>
-            <div class="nav-name"> WONDERLust
+            <div class="nav-name"> Travique
             </div>
         </div>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -17,9 +17,9 @@
 
 
             <!-- search button -->
-            <form class="d-flex ms-auto" role="search">
-                <input class="form-control me-2 search-input" type="search" placeholder="Search destinations" aria-label="Search" />
-                <button class="btn btn-outline-danger search-button " type="submit"><i class="fa-solid fa-magnifying-glass search-icon"></i>Search </button>
+            <form method="POST" class="d-flex ms-auto" role="search" action="/listing/search">
+                <input class="form-control me-2 search-input" id="searchInput" type="search" name="placeName" placeholder="Search destinations" aria-label="Search" />
+                <button id="searchBtn" class="btn btn-outline-danger search-button " type="submit"><i class="fa-solid fa-magnifying-glass search-icon"></i>Search </button>
             </form>
 
             <div class="navbar-nav ms-auto">
@@ -40,3 +40,5 @@
         </div>
     </div>
 </nav>
+
+<script src="/js/search.js"></script>

@@ -11,6 +11,7 @@ const path = require("path");
 // const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js")
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const flash = require("connect-flash");
 
 //allowing  hoppscotch
@@ -44,10 +45,12 @@ app.use(express.urlencoded({ extended: true }));
 app.engine("ejs", ejsMate);
 
 //--------------------------------------------------------------------------------------------------------------
+
+const dbURL = process.env.ATLAS_MONGO_DB ;
 // connecting with mongo
 async function main() {
     // below line will return a promise
-    await mongoose.connect('mongodb://127.0.0.1:27017/Wonderlust');
+    await mongoose.connect(dbURL);
 }
 
 main()
@@ -57,7 +60,17 @@ main()
     .catch(err => console.log(err));
 //============================================================================================================
 
+//session related things
+const store = MongoStore.create({
+    mongoUrl: dbURL,
+    crypto:{
+        secret : "mysupersecretkey",
+    },
+    touchAfter : 24 * 3600,
+}) 
+
 const sessionOptions = {
+    store,
     secret: "mysupersecretkey",
     resave: false,
     saveUninitialized: true,
@@ -85,19 +98,11 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    console.log(req.user)
     res.locals.currentUser = req.user;
+    
     next();
 })
-
-
-// app.get("/demouser", async (req, res) => {
-//     let User1 = new User({   
-//         email: "sahibs7868@gmail.com",
-//         username: "sahib"  
-//     });
-//     const result = await User.register(User1, "Sahib12345");
-//     res.send(result);
-// })
 
 // listing routers
 app.use("/listing", listing);

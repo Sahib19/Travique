@@ -7,8 +7,6 @@
   <title>WonderLust Listings</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-
 </head>
 
 <% layout("/layouts/boilerplate") %>
@@ -27,7 +25,7 @@
       </div>
 
       <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
+        <div><i class="fa-solid fa-bed"></i></div>
         <p>Rooms</p>
       </div>
 
@@ -73,31 +71,57 @@
     </div>
 
 
+    <!-- all cards -->
 
     <div class="container mt-4">
-      <!-- Listings Grid -->
-      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3 mb-5">
-        <% for(let list of allListing) { %>
-          <div class="col ">
-            <a href="/listing/<%= list._id %>" class="text-decoration-none text-dark">
-              <div class="card h-100 shadow-sm rounded-4">
-                <img src="<%= list.image.url %>" class="card-img-top" alt="listing-image"
-                  style="height: 20rem; object-fit: cover;">
 
-                <div class="card-body">
-                  <p class="card-text ps-3 pt-2">
-                    <b>
-                      <%= list.title %>
-                    </b> <br>
-                    &#8377; <%= list.price ? list.price.toLocaleString("en-IN") : 0 %>
-                  </p>
-                </div>
-              </div>
-            </a>
+      <%if(listingCount===0){ %>
+        <div class="col-12 d-flex justify-content-center mt-5 mb-5 ">
+          <div class="card shadow-sm rounded-4 text-center" style="max-width: 30rem; margin-left: 50px;">
+            <div class="card-body p-5">
+              <img src="https://static.vecteezy.com/system/resources/previews/007/104/553/non_2x/search-no-result-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg" alt="No results" class="mb-4"
+                style="width: 130px; ">
+
+              <h4 class="card-title text-muted">No Listings Found </h4>
+              <p class="card-text text-secondary">
+                It looks like there are no listings under <b><%= category  %></b>.
+                Try browsing all available listings instead.
+              </p>
+
+              <a href="/listing" class="btn btn-outline-danger search-button ">
+                View All Listings
+              </a>
+            </div>
           </div>
-          <% } %>
-      </div>
+        </div>
 
+        <% }else{ %>
+          <!-- Listings Grid -->
+          <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3 mb-5">
+            <% for(let list of allListing) { %>
+              <div class="col ">
+                <a href="/listing/<%= list._id %>" class="text-decoration-none text-dark">
+                  <div class="card h-100 shadow-sm rounded-4">
+                    <img src="<%= list.image.url %>" class="card-img-top" alt="listing-image"
+                      style="height: 20rem; object-fit: cover;">
+
+                    <div class="card-body">
+                      <p class="card-text ps-3 pt-2">
+                        <b>
+                          <%= list.title %>
+                        </b> <br>
+                        &#8377; <%= list.price ? list.price.toLocaleString("en-IN") : 0 %>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <% } %>
+
+
+          </div>
+        <% } %>
     </div>
 
     <!-- Bootstrap JS (optional) -->

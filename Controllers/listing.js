@@ -11,8 +11,8 @@ module.exports.index = async (req, res) => {
     } else {
         allListing = await Listing.find({ category: category });
     }
-
-    res.render("listings/index.ejs", {allListing });
+    let  listingCount =  Object.keys(allListing).length ;
+    res.render("listings/index.ejs", { allListing , listingCount , category});
 }
 
 module.exports.renderNewForm = (req, res) => {
@@ -71,6 +71,26 @@ module.exports.updateListingInDb = async (req, res) => {
     }
     req.flash("success", "Exiting Listing Updated!");
     res.redirect(`/listing/${id}`);
+}
+
+module.exports.showSearch = async (req, res) => {
+    let { placeName } = req.body;
+
+    if (!placeName || placeName.trim() === "") {
+        req.flash("error", "Please enter a place name!");
+        return res.redirect("/listing");
+    }
+
+    let allListing = await Listing.find({ title: { $regex: placeName, $options: "i" } });
+
+
+    if (allListing.length === 0) {
+        req.flash("error", "No exact place found!");
+        return res.redirect("/listing");
+    }
+
+    res.render("listings/search.ejs", { allListing });
+
 }
 
 module.exports.destroyListing = async (req, res) => {

@@ -3,6 +3,8 @@ const placeName = listingLocation;
 const title = listingTitle;
 const apiKey = maptoken; //  key
 
+console.log(placeName , " " , title , " " , apiKey );
+
 // Step 1: Create a map instance (default view: world)
 const map = L.map("map").setView([20, 0], 2);
 
@@ -15,7 +17,6 @@ L.tileLayer(`https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey
 fetch(`https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(placeName)}&apiKey=${apiKey}`)
   .then(res => res.json())
   .then(result => {
-    console.log(result.json())
     if (result.features.length > 0) {
       const coords = result.features[0].geometry.coordinates;
       console.log(coords);

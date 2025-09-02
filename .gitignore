@@ -1,2 +1,3 @@
 #environment varibales
 .env
+node_modules/

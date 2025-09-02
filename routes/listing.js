@@ -4,13 +4,13 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const { listingSchema } = require("../schema.js");
 
 //things realted to images :)
-const multer  = require('multer');
-const {storage} = require("../cloudConfig.js")
-const upload = multer({ storage})
+const multer = require('multer');
+const { storage } = require("../cloudConfig.js")
+const upload = multer({ storage })
 
 
 //requiring the middle to check user doing somehting is authenticated ot not
-const { isLoggedIn, isOwner, validateListing , resetFilter} = require("../middleware.js");
+const { isLoggedIn, isOwner, validateListing, resetFilter } = require("../middleware.js");
 
 //requiring the differeny controllers
 const listingController = require("../Controllers/listing.js");
@@ -28,6 +28,9 @@ router.route("/")
 //render form to create the new route
 router.get("/new", isLoggedIn, listingController.renderNewForm)
 
+router.route("/search")
+    .post(wrapAsync(listingController.showSearch))
+
 router.route("/:id")
     .get(wrapAsync(listingController.showRoute))
     .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing))
@@ -37,9 +40,11 @@ router.get("/edit/:id", isLoggedIn, isOwner, wrapAsync(listingController.editFor
 
 //changing the update in the database
 router.put("/update/:id",
-    isLoggedIn, 
-    isOwner, 
+    isLoggedIn,
+    isOwner,
     upload.single("image"),
     wrapAsync((listingController.updateListingInDb)));
+
+
 
 module.exports = router;
