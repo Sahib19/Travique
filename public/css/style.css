@@ -2,9 +2,15 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* ----------------------------------------------------------cc */
+    background-color: white !important ;
 }
 
 .container {
+    /* ----------------------------------------------------------cc */
+    background-color:white !important;
     flex: 1;
 }
 
@@ -19,8 +25,11 @@ h1 {
 }
 
 /* ---------------- Navbar ---------------- */
+
+
 .navbar {
-    background-color: #ffffff !important;
+    /* ----------------------------------------------------------cc */
+    background-color: #E8E9EB  !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     padding: 0.6rem 1rem;
     height: 5rem;
@@ -54,13 +63,17 @@ h1 {
 
 .nav-name {
     position: relative;
-    font-weight: 800;                         /* bold for brand presence */
-    font-size: 1.4rem;                        /* bigger for logo feel */
+    font-weight: 800;
+    /* bold for brand presence */
+    font-size: 1.4rem;
+    /* bigger for logo feel */
     padding: 0.6rem 1rem;
-    letter-spacing: 2px;                      /* more space for logo-style text */
-    font-family:  "Pacifico" ;
+    letter-spacing: 2px;
+    /* more space for logo-style text */
+    font-family: "Pacifico";
     background: linear-gradient(135deg, #FF6B6B, #FF385C, #6C63FF);
-    -webkit-background-clip: text;            /* apply gradient to text */
+    -webkit-background-clip: text;
+    /* apply gradient to text */
     -webkit-text-fill-color: transparent;
     background-clip: text;
     transition: transform 0.3s ease, text-shadow 0.3s ease;
@@ -77,17 +90,21 @@ h1 {
     position: relative;
     left: 20px;
     top: 5px;
-    height: 45px;                        /* control logo size */
+    height: 45px;
+    /* control logo size */
     width: auto;
-    object-fit: contain;                 /* keeps proportions */
+    object-fit: contain;
+    /* keeps proportions */
     transition: transform 0.3s ease, filter 0.3s ease;
     cursor: pointer;
 }
 
 /* Hover effect */
 .nav-logo:hover {
-    transform: scale(1.08);              /* subtle zoom */
-    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.15)); /* soft glow */
+    transform: scale(1.08);
+    /* subtle zoom */
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.15));
+    /* soft glow */
 }
 
 .nav-ls-button {
@@ -151,6 +168,9 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    /* ----------------------------------------------------------cc */
+    background-color: #778082 !important;  
 }
 
 .f-info-social,
@@ -181,37 +201,6 @@ h1 {
     cursor: pointer;
     text-decoration: underline;
 }
-
-/* ---------------- Cards ---------------- */
-/* .card {
-    border: none !important;
-    margin: 0.2rem;
-    margin-bottom: 2rem;
-}
-
-.card-img-top {
-    border-radius: 1rem !important;
-    width: 100%;
-    object-fit: cover;
-}
-
-.card-body {
-    padding: 0 !important;
-}
-
-.card-a-tag {
-    padding: 0px;
-    text-decoration: none;
-}
-
-.card-img-overlay {
-    opacity: 0;
-}
-
-.card-img-overlay:hover {
-    background-color: white;
-    opacity: 0.7;
-} */
 
 /* ---------------- Add Place Form ---------------- */
 .add-btn {
@@ -303,11 +292,61 @@ h1 {
     transform: translateY(-3px);
 }
 
-.filter-active{
+.filter-active {
     opacity: 1;
     border-bottom: 1px solid black;
 }
 
 .filter p {
     font-size: 0.9rem;
+}
+
+/* cards Css  */
+.image-div{
+     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+.card-single {
+    margin: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* smooth effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.card-single:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+}
+
+.card-img-top{     
+     transition: transform 0.4s ease, box-shadow 0.3s ease;
+    
+}
+
+.card-img-top:hover{
+ transform: scale(1.07);
+}
+
+.card-text {
+    color: black;
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-text .place {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.5px;
+}
+
+.card-text .price {
+  font-size: 0.95rem;
+  color: #ff385c; /* nice accent color */
+  font-weight: 500;
+  margin-top: 4px;
+  display: block;
 }
