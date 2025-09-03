@@ -4,38 +4,27 @@
 
 Travique is a **full-stack travel platform** where users can discover amazing destinations, add their own listings, filter and search easily, and leave reviews. Built with **Node.js, Express, MongoDB, and Bootstrap**.
 
----
+## 🚀 Features
 
-## ✨ Features
+### User Features
+- **Authentication**: Users can sign up, log in, and log out.  
+- **Listing Exploration**: View all available travel destinations with detailed information, including images, place name, price, and location.  
+- **Search & Filter**: Quickly search for destinations and filter listings by categories.  
+- **Google Maps Integration**: See the location of each destination on an interactive map.  
+- **Reviews**: Users can add reviews to listings and edit/delete their own reviews.  
+- **Listing Management**: Users who create listings can edit or delete them at any time.  
 
-### 🏝️ Destinations & Listings
-- View all destinations in a **beautiful card layout**.
-- Add new destinations with images, place name, price, and description.
-- Interactive cards with **hover zoom, shadows, and rounded corners**.
+### UI/UX Features
+- **Responsive Design**: Built with Bootstrap to ensure responsiveness across devices.  
+- **Interactive Cards**: Listing cards have hover effects, zoom-in animations on images, and subtle shadows for a polished look.  
+- **Rounded Corners**: Custom styling for top corners of cards and elements for a modern appearance.  
+- **Professional Color Scheme**: Light background for the body, black navbar, and elegant footer for a clean look.  
+- **Smooth Hover Effects**: Images and buttons have smooth transitions for better user interaction.  
 
-### 🎯 Filters & Search
-- **Filter bar** above homepage listings for quick browsing by category (e.g., beaches, mountains, cities).
-- **Search bar** in the navbar to instantly find destinations by name.
-
-### 👤 Authentication
-- User signup, login, and logout system.
-- Navbar dynamically shows different options for logged-in users and guests.
-
-### 💬 Reviews
-- Users can add reviews for destinations.
-- Only authors can delete their reviews.
-
-### 🗄️ Backend & Database
-- **MongoDB Atlas** for cloud storage.
-- Listings reference their **owner user**.
-- Express.js with Mongoose ORM for smooth database management.
-
-### 🎨 Frontend & UI
-- **Sticky black navbar** with icons.
-- Light, modern background for the body.
-- Filter + search section for easy navigation.
-- Card hover effects and box shadows for a lively UI.
-- Responsive design for desktops and mobiles.
+### Backend & Database
+- **Express.js Server**: Handles routing, sessions, and user authentication.  
+- **MongoDB & Mongoose**: Listings, users, and reviews are stored in MongoDB Atlas.  
+- **Data Seeding**: Sample data can be seeded into the database for easy testing.  
 
 ---
 
@@ -49,7 +38,41 @@ Travique is a **full-stack travel platform** where users can discover amazing de
 
 ---
 
-## 📸 Screenshots
+## 📂 Project Structure
+```
+Travique/
+│
+├── Controllers/ # Handles request logic (listing, user, review controllers)
+│
+├── init/ # Database initialization and seed data (sample listings)
+│
+├── models/ # Mongoose schemas and models (Listing, User, Review)
+│
+├── node_modules/ # Project dependencies (auto-generated)
+│
+├── public/ # Static assets (CSS, JS, Images)
+│
+├── routes/ # Express route definitions (listing, user, review routes)
+│
+├── utils/ # Utility/helper functions
+│
+├── views/ # EJS templates (frontend pages)
+│
+├── .env # Environment variables (MongoDB URI, API keys, secrets)
+├── .gitignore # Files/folders ignored by Git
+├── app.js # Main entry point of the application
+├── cloudConfig.js # Cloudinary configuration for image uploads
+├── middleware.js # Custom middleware (auth checks, error handling)
+├── package-lock.json # Auto-generated dependency lock file
+├── package.json # Project metadata and dependencies
+├── README.md # Project documentation
+└── schema.js # Extra schema definitions (if any)
+```
 
-> Add screenshots/gifs of your UI here
+
+##  📂 Live Demo
+
+You can check out the live deployed version here:
+[Travique Live Demo][(https://travique-fxzw.onrender.com)]
+
 
