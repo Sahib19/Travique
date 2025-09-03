@@ -1,4 +1,4 @@
-# 🌍 Travique
+#  Travique
 
 > Explore, Add, Filter, and Review Destinations – Your Travel Companion  
 
@@ -70,9 +70,10 @@ Travique/
 ```
 
 
-##  📂 Live Demo
+##  🔗 Live Demo
 
-You can check out the live deployed version here:
-[Travique Live Demo][(https://travique-fxzw.onrender.com)]
+You can check out the live deployed version here:  
+[![Live Demo](https://img.shields.io/badge/Live-Website-green?style=for-the-badge&logo=vercel)](https://travique-fxzw.onrender.com)
+
 
 
