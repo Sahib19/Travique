@@ -1,29 +1,55 @@
-# WonderLust
-# WonderLust 🌍✨
+# 🌍 Travique
 
-**Explore, Add, and Share Your Favorite Locations!**  
+> Explore, Add, Filter, and Review Destinations – Your Travel Companion  
 
-WonderLust is a modern, user-friendly web application that allows travelers, explorers, and enthusiasts to **browse, add, and manage locations** with beautiful images and detailed information. Whether it’s a hidden gem in your city or a dream vacation spot, WonderLust helps you keep track and share it with ease.
+Travique is a **full-stack travel platform** where users can discover amazing destinations, add their own listings, filter and search easily, and leave reviews. Built with **Node.js, Express, MongoDB, and Bootstrap**.
 
 ---
 
-## 🌟 Features
+## ✨ Features
 
-- **Add New Locations** – Easily add a new location with title, description, image, price, city, and country.  
-- **View Listings** – Browse all available locations with clean and responsive cards.  
-- **Detailed View** – Click on a location to see its complete details along with images.  
-- **Edit & Delete** – Update or remove your locations effortlessly.  
-- **Responsive Design** – Works smoothly on desktops, tablets, and mobile devices.  
-- **Modern UI** – Attractive interface with Bootstrap styling and dynamic cards.  
+### 🏝️ Destinations & Listings
+- View all destinations in a **beautiful card layout**.
+- Add new destinations with images, place name, price, and description.
+- Interactive cards with **hover zoom, shadows, and rounded corners**.
+
+### 🎯 Filters & Search
+- **Filter bar** above homepage listings for quick browsing by category (e.g., beaches, mountains, cities).
+- **Search bar** in the navbar to instantly find destinations by name.
+
+### 👤 Authentication
+- User signup, login, and logout system.
+- Navbar dynamically shows different options for logged-in users and guests.
+
+### 💬 Reviews
+- Users can add reviews for destinations.
+- Only authors can delete their reviews.
+
+### 🗄️ Backend & Database
+- **MongoDB Atlas** for cloud storage.
+- Listings reference their **owner user**.
+- Express.js with Mongoose ORM for smooth database management.
+
+### 🎨 Frontend & UI
+- **Sticky black navbar** with icons.
+- Light, modern background for the body.
+- Filter + search section for easy navigation.
+- Card hover effects and box shadows for a lively UI.
+- Responsive design for desktops and mobiles.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** HTML5, CSS3, Bootstrap, EJS templates  
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap 5  
 - **Backend:** Node.js, Express.js  
-- **Database:** MongoDB  
-- **Other Tools:** Method-Override for PUT/DELETE forms, FontAwesome icons  
+- **Database:** MongoDB Atlas (Mongoose)  
+- **Authentication:** Express-session, Passport.js (if used)  
+- **Deployment:** (optional: Render, Heroku, Vercel)
 
 ---
+
+## 📸 Screenshots
+
+> Add screenshots/gifs of your UI here
 
