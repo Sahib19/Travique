@@ -1,4 +1,4 @@
-#  <img  src="/images/favicon.png" alt="TraviQue Logo" width="40" height="40"> Travique
+#  ✈️ Travique
 
 > Explore, Add, Filter, and Review Destinations – Your Travel Companion  
 
