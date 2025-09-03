@@ -1,4 +1,4 @@
-#  Travique
+#  <link rel="icon" href="/images/favicon.png"> Travique
 
 > Explore, Add, Filter, and Review Destinations – Your Travel Companion  
 
