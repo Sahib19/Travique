@@ -1,0 +1,507 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <!-- Back Button -->
+            <div class="mb-4">
+                <a href="/booking/user/bookings" class="btn btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-2"></i>Back to My Bookings
+                </a>
+            </div>
+
+            <!-- Booking Details Card -->
+            <div class="card border-0 shadow-lg mb-4">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">
+                            <i class="fa-solid fa-calendar-check me-2"></i>
+                            Booking Details
+                        </h3>
+                        <span class="badge fs-6 <%= booking.status === 'confirmed' ? 'bg-success' : booking.status === 'pending' ? 'bg-warning' : 'bg-secondary' %>">
+                            <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <!-- Property Info -->
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h4 class="mb-3"><%= booking.listing.title %></h4>
+                            <p class="text-muted mb-2">
+                                <i class="fa-solid fa-map-marker-alt me-2"></i>
+                                <%= booking.listing.location %>, <%= booking.listing.country %>
+                            </p>
+                            <p class="mb-3">
+                                <i class="fa-solid fa-user me-2"></i>
+                                Hosted by <%= booking.host.username %>
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-md-end">
+                            <div class="booking-price-display p-3 bg-light rounded">
+                                <div class="text-muted small">Total Paid</div>
+                                <div class="fw-bold fs-4 text-success">
+                                    ₹<%= booking.totalPrice.toLocaleString("en-IN") %>
+                                </div>
+                                <div class="text-muted small">
+                                    <%= booking.nights %> <%= booking.nights === 1 ? 'night' : 'nights' %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Booking Details -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">📅 Trip Details</h5>
+                            <div class="booking-info-card p-3 bg-light rounded">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-calendar-plus me-3 text-primary"></i>
+                                    <div>
+                                        <strong>Check-in:</strong><br>
+                                        <span><%= new Date(booking.checkIn).toLocaleDateString('en-US', {
+                                            weekday: 'long',
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        }) %></span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fa-solid fa-calendar-minus me-3 text-primary"></i>
+                                    <div>
+                                        <strong>Check-out:</strong><br>
+                                        <span><%= new Date(booking.checkOut).toLocaleDateString('en-US', {
+                                            weekday: 'long',
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        }) %></span>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-solid fa-users me-3 text-primary"></i>
+                                    <div>
+                                        <strong>Guests:</strong> <%= booking.guests %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5 class="mb-3">💰 Payment Summary</h5>
+                            <div class="booking-info-card p-3 bg-light rounded">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>₹<%= booking.listing.price.toLocaleString("en-IN") %> × <%= booking.nights %> nights</span>
+                                    <span>₹<%= (booking.listing.price * booking.nights).toLocaleString("en-IN") %></span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Service Fee</span>
+                                    <span>₹<%= Math.round(booking.totalPrice * 0.1).toLocaleString("en-IN") %></span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between fw-bold">
+                                    <span>Total</span>
+                                    <span>₹<%= booking.totalPrice.toLocaleString("en-IN") %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Special Requests -->
+                    <% if(booking.specialRequests) { %>
+                    <div class="mb-4">
+                        <h5 class="mb-3">📝 Special Requests</h5>
+                        <div class="alert alert-info">
+                            <%= booking.specialRequests %>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <!-- Cancellation Info -->
+                    <% if(booking.status === 'cancelled') { %>
+                    <div class="mb-4">
+                        <h5 class="mb-3 text-danger">❌ Cancellation Details</h5>
+                        <div class="alert alert-danger">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa-solid fa-user-times me-2"></i>
+                                <strong>Cancelled by:</strong> <%= booking.cancelledBy && booking.cancelledBy.username || 'System' %>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fa-solid fa-calendar-times me-2"></i>
+                                <strong>Cancelled on:</strong> <%= new Date(booking.cancellationDate).toLocaleDateString() %>
+                            </div>
+                            <% if(booking.cancellationReason) { %>
+                            <div class="mt-2">
+                                <strong>Reason:</strong> <%= booking.cancellationReason %>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 flex-wrap">
+                        <% if(booking.guest._id.toString() === currentUser._id.toString() && booking.status === 'pending') { %>
+                            <form method="POST" action="/booking/<%= booking._id %>/cancel"
+                                  onsubmit="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.')">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="fa-solid fa-times me-2"></i>Cancel Booking
+                                </button>
+                            </form>
+                        <% } %>
+                        <% if(booking.host._id.toString() === currentUser._id.toString() && booking.status === 'pending') { %>
+                            <form method="POST" action="/booking/<%= booking._id %>/confirm" class="d-inline">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa-solid fa-check me-2"></i>Confirm Booking
+                                </button>
+                            </form>
+                        <% } %>
+
+                        <!-- Contact Host/Guest Button -->
+                        <% if(booking.guest._id.toString() === currentUser._id.toString()) { %>
+                            <button class="btn btn-outline-primary" onclick="openChat()">
+                                <i class="fa-solid fa-message me-2"></i>Contact Host
+                            </button>
+                        <% } else { %>
+                            <button class="btn btn-outline-primary" onclick="openChat()">
+                                <i class="fa-solid fa-message me-2"></i>Contact Guest
+                            </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="card border-0 shadow-sm mb-4" id="chatSection" style="display: none;">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-comments me-2"></i>
+                        <span id="chatTitle">Chat</span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" onclick="closeChat()"></button>
+                </div>
+                <div class="card-body">
+                    <!-- Messages Container -->
+                    <div id="messagesContainer" class="messages-container mb-3" style="height: 400px; max-height: 60vh; overflow-y: auto; border: 1px solid #dee2e6; border-radius: 8px; padding: 1rem;">
+                        <div class="text-center text-muted py-4">
+                            <i class="fa-solid fa-comments fa-2x mb-2"></i>
+                            <p>Start a conversation about your booking</p>
+                        </div>
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="message-input-container">
+                        <div class="input-group">
+                            <input type="text" id="messageInput" class="form-control" placeholder="Type your message..." maxlength="1000">
+                            <button class="btn btn-primary" onclick="sendMessage()" id="sendButton" disabled>
+                                <i class="fa-solid fa-paper-plane me-1"></i>Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Script Variables (Available for both guests and hosts) -->
+            <script>
+                // Chat configuration variables
+                const currentBookingId = "<%= booking._id %>";
+                const currentUserId = "<%= currentUser._id %>";
+                const otherParticipantName = "<%= (booking.guest._id.toString() === currentUser._id.toString()) ? (booking.host.profile?.firstName || booking.host.username) : (booking.guest.profile?.firstName || booking.guest.username) %>";
+                const receiverId = "<%= (booking.guest._id.toString() === currentUser._id.toString()) ? booking.host._id : booking.guest._id %>";
+
+                console.log('Chat variables loaded:', {
+                    currentBookingId,
+                    currentUserId,
+                    otherParticipantName,
+                    receiverId
+                });
+            </script>
+
+            <!-- Booking Timeline -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">
+                        <i class="fa-solid fa-clock me-2"></i>
+                        Booking Timeline
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="timeline">
+                        <div class="timeline-item <%= booking.status !== 'cancelled' ? 'completed' : '' %>">
+                            <div class="timeline-marker bg-success">
+                                <i class="fa-solid fa-calendar-plus"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Booking Created</h6>
+                                <p class="text-muted mb-0">
+                                    <%= new Date(booking.createdAt).toLocaleDateString('en-US', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    }) %>
+                                </p>
+                            </div>
+                        </div>
+
+                        <% if(booking.status === 'confirmed') { %>
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker bg-success">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Booking Confirmed</h6>
+                                <p class="text-muted mb-0">
+                                    Your booking has been confirmed by the host
+                                </p>
+                            </div>
+                        </div>
+                        <% } %>
+
+                        <% if(booking.status === 'cancelled') { %>
+                        <div class="timeline-item completed">
+                            <div class="timeline-marker bg-danger">
+                                <i class="fa-solid fa-times"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Booking Cancelled</h6>
+                                <p class="text-muted mb-0">
+                                    Cancelled on <%= new Date(booking.cancellationDate).toLocaleDateString() %>
+                                </p>
+                            </div>
+                        </div>
+                        <% } %>
+
+                        <div class="timeline-item <%= booking.status === 'confirmed' ? 'active' : '' %>">
+                            <div class="timeline-marker <%= booking.status === 'confirmed' ? 'bg-primary' : 'bg-secondary' %>">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h6>Check-in Date</h6>
+                                <p class="text-muted mb-0">
+                                    <%= new Date(booking.checkIn).toLocaleDateString('en-US', {
+                                        weekday: 'long',
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric'
+                                    }) %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.booking-info-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 20px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -35px;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+}
+
+.timeline-item.completed .timeline-marker {
+    background: #28a745 !important;
+}
+
+.timeline-item.active .timeline-marker {
+    background: #007bff !important;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+    }
+}
+
+.timeline-content h6 {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.badge {
+    font-size: 0.8em;
+}
+
+/* Chat Styles */
+.messages-container {
+    background: #f8f9fa;
+}
+
+.message {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    max-width: 80%;
+}
+
+.message-sent {
+    margin-left: auto;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    text-align: right;
+}
+
+.message-received {
+    margin-right: auto;
+    background: white;
+    border: 1px solid #dee2e6;
+    color: #333;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.message-header strong {
+    font-weight: 600;
+}
+
+.message-text {
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.message-input-container {
+    border-top: 1px solid #dee2e6;
+    padding-top: 1rem;
+}
+
+.message-input-container .input-group {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.message-input-container .form-control {
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+}
+
+.message-input-container .form-control:focus {
+    box-shadow: none;
+    border-color: #007bff;
+}
+
+.message-input-container .btn {
+    border-radius: 0 25px 25px 0;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    font-weight: 500;
+}
+
+.message-input-container .btn:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+}
+
+.message-input-container .btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Mobile responsive chat styles */
+@media (max-width: 768px) {
+    #chatSection {
+        margin: 0 -1rem;
+        border-radius: 0;
+        box-shadow: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    .messages-container {
+        height: 300px !important;
+        max-height: 50vh !important;
+    }
+
+    .message {
+        max-width: 90%;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .message-input-container .form-control {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    .message-input-container .btn {
+        padding: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .messages-container {
+        height: 250px !important;
+        max-height: 40vh !important;
+    }
+
+    .message {
+        max-width: 95%;
+    }
+
+    .card-header h5 {
+        font-size: 1rem;
+    }
+}
+</style>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/chat.js"></script>
+</body>

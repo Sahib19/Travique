@@ -1,0 +1,114 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- My Listings Header -->
+            <div class="wishlist-header mb-5">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h2 class="wishlist-title">
+                            <i class="fa-solid fa-list text-primary me-3"></i>
+                            My Listings
+                        </h2>
+                        <p class="wishlist-subtitle">
+                            <%= listings.length %> <%= listings.length === 1 ? 'destination' : 'destinations' %> you've shared with travelers
+                        </p>
+                    </div>
+                    <div>
+                        <a href="/listing/new" class="btn btn-primary">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Add New Destination
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <% if(listings.length === 0) { %>
+                <!-- Empty Listings State -->
+                <div class="empty-wishlist">
+                    <div class="text-center py-5">
+                        <div class="empty-icon mb-4">
+                            <i class="fa-solid fa-suitcase-rolling"></i>
+                        </div>
+                        <h3 class="empty-title">No listings yet</h3>
+                        <p class="empty-subtitle">
+                            Share your favorite destinations with fellow travelers by creating your first listing
+                        </p>
+                        <a href="/listing/new" class="btn btn-primary btn-lg mt-3">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Create Your First Listing
+                        </a>
+                    </div>
+                </div>
+            <% } else { %>
+                <!-- Listings Grid -->
+                <div class="row g-4">
+                    <% listings.forEach(listing => { %>
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                            <div class="wishlist-card">
+                                <div class="card h-100">
+                                    <div class="image-div position-relative">
+                                        <a href="/listing/<%= listing._id %>" class="text-decoration-none">
+                                            <img src="<%= listing.image?.url %>" class="card-img-top" alt="<%= listing.title %>">
+                                        </a>
+
+                                        <!-- Category Badge -->
+                                        <% if(listing.category) { %>
+                                            <span class="category-badge">
+                                                <%= listing.category %>
+                                            </span>
+                                        <% } %>
+
+                                        <!-- Action Buttons Overlay -->
+                                        <div class="card-actions-overlay">
+                                            <div class="btn-group" role="group">
+                                                <a href="/listing/edit/<%= listing._id %>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-edit"></i>
+                                                </a>
+                                                <form method="POST" action="/listing/<%= listing._id %>?_method=DELETE" class="d-inline"
+                                                      onsubmit="return confirm('Are you sure you want to delete this listing?')">
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <a href="/listing/<%= listing._id %>" class="text-decoration-none">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= listing.title %></h5>
+                                            <p class="card-location">
+                                                <i class="fa-solid fa-location-dot me-1"></i>
+                                                <%= listing.location %>, <%= listing.country %>
+                                            </p>
+                                            <div class="card-price">
+                                                ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %>
+                                                <span class="per-night">per night</span>
+                                            </div>
+                                            <% if(listing.reviews && listing.reviews.length > 0) { %>
+                                                <div class="card-rating mt-2">
+                                                    <div class="rating-stars">
+                                                        <% for(let i = 1; i <= 5; i++) { %>
+                                                            <i class="fa-solid fa-star <%= i <= Math.round(listing.averageRating || 0) ? 'text-warning' : 'text-muted' %>"></i>
+                                                        <% } %>
+                                                    </div>
+                                                    <span class="rating-count">(<%= listing.reviews.length %> reviews)</span>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script>
+// Add any specific JavaScript for my listings page if needed
+</script>

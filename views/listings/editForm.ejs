@@ -1,125 +1,97 @@
 <% layout("/layouts/boilerplate") %>
 
-    <body style="font-family: Arial, sans-serif; background-color: #f9f9f9;">
+    <body style="background-color: #f9f9f9;">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+                    <div class="card shadow-lg border-0 rounded-3">
+                        <div class="card-body p-4">
+                            <h2 class="text-center mb-4" style="color: #333; font-weight: bold;">
+                                ✏️ Update Details
+                            </h2>
 
-        <!-- Container with spacing from navbar -->
-        <div
-            style="margin-top: 80px; margin-bottom: 80px; max-width: 600px; margin-left: auto; margin-right: auto; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                            <form method="POST" action="/listing/update/<%= listing._id %>?_method=PUT"
+                                  class="needs-validation" novalidate enctype="multipart/form-data">
 
-            <h2 style="text-align: center; margin-bottom: 20px; color: #333;">✏️ Update Details</h2>
+                                <div class="mb-3">
+                                    <label for="title" class="form-label fw-semibold">Title</label>
+                                    <input name="title" placeholder="Enter title" value="<%= listing.title %>"
+                                           class="form-control" required>
+                                    <div class="valid-feedback">Looks good!</div>
+                                    <div class="invalid-feedback">Please give a valid title.</div>
+                                </div>
 
-            <form method="POST" action="/listing/update/<%= listing._id %>?_method=PUT"
-                style="display: flex; flex-direction: column; gap: 15px;" class="needs-validation" novalidate
-                enctype="multipart/form-data">
+                                <div class="mb-3">
+                                    <label for="description" class="form-label fw-semibold">Description</label>
+                                    <textarea name="description" placeholder="Enter description" rows="3"
+                                              class="form-control" required><%= listing.description %></textarea>
+                                    <div class="invalid-feedback">Please give a valid description.</div>
+                                </div>
 
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Title</label>
-                    <input name="title" placeholder="Enter title" value="<%= listing.title %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label fw-semibold">Price</label>
+                                    <input name="price" placeholder="Enter price" value="<%= listing.price %>"
+                                           class="form-control" required>
+                                    <div class="invalid-feedback">Please give a valid price.</div>
+                                </div>
 
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please give a valid username.
-                    </div>
-                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Current Listing Image</label>
+                                    <div class="text-center">
+                                        <img src="<%= resizeImageUrl %>" alt="Original listing image"
+                                             class="img-fluid rounded" style="max-height: 200px; border: 1px solid #dee2e6;">
+                                    </div>
+                                </div>
 
-                <div>
-                    <label
-                        style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Description</label>
-                    <textarea name="description" placeholder="Enter description" rows="3"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; resize: none;"
-                        required><%= listing.description %></textarea>
+                                <div class="mb-3">
+                                    <label for="image" class="form-label fw-semibold">Upload New Image (Optional)</label>
+                                    <input name="image" type="file" class="form-control">
+                                </div>
 
-                    <div class="invalid-feedback">
-                        Please give a valid description.
-                    </div>
-                </div>
+                                <div class="mb-3">
+                                    <label for="category" class="form-label fw-semibold">Category</label>
+                                    <select name="category" class="form-select" required>
+                                        <option value="<%= listing.category %>" selected><%= listing.category %></option>
+                                        <option value="Trending">Trending</option>
+                                        <option value="Rooms">Rooms</option>
+                                        <option value="Iconic Cities">Iconic Cities</option>
+                                        <option value="Mountains">Mountains</option>
+                                        <option value="Forest">Forest</option>
+                                        <option value="Heritage Sites">Heritage Sites</option>
+                                        <option value="Castles">Castles</option>
+                                        <option value="Beaches">Beaches</option>
+                                        <option value="Camping">Camping</option>
+                                        <option value="Farms">Farms</option>
+                                        <option value="Artic">Arctic</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please choose a valid category.</div>
+                                </div>
 
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Price</label>
-                    <input name="price" placeholder="Enter price" value="<%= listing.price %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="location" class="form-label fw-semibold">Location</label>
+                                        <input name="location" placeholder="Enter location" value="<%= listing.location %>"
+                                               class="form-control" required>
+                                        <div class="invalid-feedback">Please give a valid location.</div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="country" class="form-label fw-semibold">Country</label>
+                                        <input name="country" placeholder="Enter country" value="<%= listing.country %>"
+                                               class="form-control" required>
+                                        <div class="invalid-feedback">Please give a valid country.</div>
+                                    </div>
+                                </div>
 
-                    <div class="invalid-feedback">
-                        Please give a valid price.
-                    </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 8px;">
-                    <label style="font-weight: bold; color: #444; margin-bottom: 5px;">Current Listing Image</label>
-                    <div
-                        style="padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; text-align: center;">
-                        <img src="<%= resizeImageUrl %>" alt="Original listing image"
-                            style="max-width: 100%; height: auto; border-radius: 6px; border: 1px solid #ccc;">
-                    </div>
-                </div>
-
-
-
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Upload New
-                        Image</label>
-                    <input name="image" value="<%= listing.image.url %>"
-                        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" type="file">
-                </div>
-                    <div>
-                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Change
-                            Category</label>
-
-                        <select name="category" class="form-select"
-                            style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;" required>
-                            <option value="<%= listing.category %>" selected>
-                                <%= listing.category %>
-                            </option>
-                            <option value="Trending">Trending</option>
-                            <option value="Rooms">Rooms</option>
-                            <option value="Iconic Cities">Iconic Cities</option>
-                            <option value="Mountains">Mountains</option>
-                            <option value="Forest">Forest</option>
-                            <option value="Heritage Sites">Heritage Sites</option>
-                            <option value="Castles">Castles</option>
-                            <option value="Beaches">Beaches</option>
-                            <option value="Camping">Camping</option>
-                            <option value="Farms">Farms</option>
-                            <option value="Artic">Arctic</option>
-                        </select>
-
-                        <div class="invalid-feedback">
-                            Please choose valid category.
+                                <div class="d-grid mt-4">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fa-solid fa-save me-2"></i>Update Listing
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                        <div>
-                            <label
-                                style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Location</label>
-                            <input name="location" placeholder="Enter location" value="<%= listing.location %>"
-                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"
-                                required>
-
-                            <div class="invalid-feedback">
-                                Please give a valid location.
-                            </div>
-                        </div>
-
-                        <div>
-                            <label
-                                style="display: block; margin-bottom: 5px; font-weight: bold; color: #444;">Country</label>
-                            <input name="country" placeholder="Enter country" value="<%= listing.country %>"
-                                style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px;"
-                                required>
-
-                            <div class="invalid-feedback">
-                                Please give a valid country.
-                            </div>
-                        </div>
-
-                        <button type="submit"
-                            style="margin-top: 10px; background: #28a745; color: white; font-weight: bold; border: none; padding: 12px; border-radius: 8px; cursor: pointer;">
-                            ✅ Submit
-                        </button>
-            </form>
+                </div>
+            </div>
         </div>
 
         <script src="/js/script.js"></script>

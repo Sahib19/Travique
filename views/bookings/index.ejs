@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <h2 class="text-center mb-5" style="color: #333; font-weight: 600;">
+                📅 My Bookings
+            </h2>
+
+            <% if(bookings.length === 0) { %>
+                <div class="text-center py-5">
+                    <div class="mb-4">
+                        <i class="fa-solid fa-calendar-xmark fa-4x text-muted"></i>
+                    </div>
+                    <h3 class="text-muted mb-3">No bookings yet</h3>
+                    <p class="text-muted mb-4">Start exploring and book your perfect stay!</p>
+                    <a href="/listing" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-search me-2"></i>Browse Listings
+                    </a>
+                </div>
+            <% } else { %>
+                <div class="row g-4">
+                    <% bookings.forEach(booking => { %>
+                        <div class="col-12 col-md-6">
+                            <div class="card h-100 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <!-- Booking Status Badge -->
+                                    <div class="d-flex justify-content-between align-items-start mb-3">
+                                        <h5 class="card-title mb-0"><%= booking.listing.title %></h5>
+                                        <span class="badge <%= booking.status === 'confirmed' ? 'bg-success' : booking.status === 'pending' ? 'bg-warning' : 'bg-secondary' %>">
+                                            <%= booking.status.charAt(0).toUpperCase() + booking.status.slice(1) %>
+                                        </span>
+                                    </div>
+
+                                    <!-- Booking Details -->
+                                    <div class="booking-details mb-3">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-calendar-days me-2 text-primary"></i>
+                                            <span><strong>Check-in:</strong> <%= new Date(booking.checkIn).toLocaleDateString() %></span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-calendar-check me-2 text-primary"></i>
+                                            <span><strong>Check-out:</strong> <%= new Date(booking.checkOut).toLocaleDateString() %></span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <i class="fa-solid fa-users me-2 text-primary"></i>
+                                            <span><strong>Guests:</strong> <%= booking.guests %></span>
+                                        </div>
+                                        <div class="d-flex align-items-center mb-3">
+                                            <i class="fa-solid fa-rupee-sign me-2 text-success"></i>
+                                            <span><strong>Total:</strong> ₹<%= booking.totalPrice.toLocaleString("en-IN") %></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Booking Type -->
+                                    <div class="mb-3">
+                                        <% if(booking.guest._id.toString() === currentUser._id.toString()) { %>
+                                            <small class="text-muted">Booked as Guest</small>
+                                        <% } else { %>
+                                            <small class="text-muted">Booked by <%= booking.guest.username %></small>
+                                        <% } %>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="d-flex gap-2">
+                                        <a href="/booking/<%= booking._id %>" class="btn btn-outline-primary btn-sm flex-fill">
+                                            <i class="fa-solid fa-eye me-1"></i>View Details
+                                        </a>
+
+                                        <% if(booking.guest._id.toString() === currentUser._id.toString() && booking.status === 'pending') { %>
+                                            <form method="POST" action="/booking/<%= booking._id %>/cancel" class="d-inline"
+                                                  onsubmit="return confirm('Are you sure you want to cancel this booking?')">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fa-solid fa-times me-1"></i>Cancel
+                                                </button>
+                                            </form>
+                                        <% } %>
+
+                                        <% if(booking.host._id.toString() === currentUser._id.toString() && booking.status === 'pending') { %>
+                                            <form method="POST" action="/booking/<%= booking._id %>/confirm" class="d-inline">
+                                                <button type="submit" class="btn btn-success btn-sm">
+                                                    <i class="fa-solid fa-check me-1"></i>Confirm
+                                                </button>
+                                            </form>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>

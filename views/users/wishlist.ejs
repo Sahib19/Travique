@@ -1,0 +1,184 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <!-- Wishlist Header -->
+            <div class="wishlist-header mb-5">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <h2 class="wishlist-title">
+                            <i class="fa-solid fa-heart text-danger me-3"></i>
+                            My Wishlist
+                        </h2>
+                        <p class="wishlist-subtitle">
+                            <%= wishlist.length %> <%= wishlist.length === 1 ? 'destination' : 'destinations' %> saved for later
+                        </p>
+                    </div>
+                    <div>
+                        <a href="/listing" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Discover More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <% if(wishlist.length === 0) { %>
+                <!-- Empty Wishlist State -->
+                <div class="empty-wishlist">
+                    <div class="text-center py-5">
+                        <div class="empty-icon mb-4">
+                            <i class="fa-solid fa-heart-crack"></i>
+                        </div>
+                        <h3 class="empty-title">Your wishlist is empty</h3>
+                        <p class="empty-subtitle">
+                            Start exploring and save your favorite destinations by clicking the heart icon
+                        </p>
+                        <a href="/listing" class="btn btn-primary btn-lg mt-3">
+                            <i class="fa-solid fa-compass me-2"></i>
+                            Start Exploring
+                        </a>
+                    </div>
+                </div>
+            <% } else { %>
+                <!-- Wishlist Grid -->
+                <div class="row g-4">
+                    <% wishlist.forEach(listing => { %>
+                        <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                            <div class="wishlist-card">
+                                <div class="card h-100">
+                                    <div class="image-div position-relative">
+                                        <a href="/listing/<%= listing._id %>" class="text-decoration-none">
+                                            <img src="<%= listing.image?.url %>" class="card-img-top" alt="<%= listing.title %>">
+                                        </a>
+                                        
+                                        <!-- Remove from Wishlist Button -->
+                                        <button class="wishlist-btn active" 
+                                                data-listing-id="<%= listing._id %>" 
+                                                onclick="toggleWishlist('<%= listing._id %>', this)"
+                                                title="Remove from wishlist">
+                                            <i class="fa-solid fa-heart"></i>
+                                        </button>
+                                        
+                                        <!-- Category Badge -->
+                                        <% if(listing.category) { %>
+                                            <span class="category-badge">
+                                                <%= listing.category %>
+                                            </span>
+                                        <% } %>
+                                    </div>
+                                    
+                                    <a href="/listing/<%= listing._id %>" class="text-decoration-none">
+                                        <div class="card-body">
+                                            <h5 class="card-title"><%= listing.title %></h5>
+                                            <p class="card-location">
+                                                <i class="fa-solid fa-location-dot me-1"></i>
+                                                <%= listing.location %>, <%= listing.country %>
+                                            </p>
+                                            <div class="card-price">
+                                                ₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %>
+                                                <small class="text-muted">per night</small>
+                                            </div>
+                                            
+                                            <!-- Quick Actions -->
+                                            <div class="card-actions mt-3">
+                                                <a href="/listing/<%= listing._id %>" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fa-solid fa-eye me-1"></i>
+                                                    View Details
+                                                </a>
+                                                <button class="btn btn-sm btn-outline-secondary" 
+                                                        onclick="shareListing('<%= listing._id %>', '<%= listing.title %>')">
+                                                    <i class="fa-solid fa-share me-1"></i>
+                                                    Share
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+
+                <!-- Wishlist Actions -->
+                <div class="wishlist-actions mt-5 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-8">
+                            <div class="action-card">
+                                <h4 class="mb-3">Love these places?</h4>
+                                <p class="text-muted mb-4">
+                                    Share your wishlist with friends or start planning your next adventure
+                                </p>
+                                <div class="d-flex flex-wrap justify-content-center gap-3">
+                                    <button class="btn btn-outline-primary" onclick="shareWishlist()">
+                                        <i class="fa-solid fa-share me-2"></i>
+                                        Share Wishlist
+                                    </button>
+                                    <a href="/listing" class="btn btn-primary">
+                                        <i class="fa-solid fa-plus me-2"></i>
+                                        Add More Places
+                                    </a>
+                                    <button class="btn btn-outline-danger" onclick="clearWishlist()">
+                                        <i class="fa-solid fa-trash me-2"></i>
+                                        Clear All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script>
+// Share individual listing
+function shareListing(listingId, title) {
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            url: window.location.origin + '/listing/' + listingId
+        });
+    } else {
+        // Fallback - copy to clipboard
+        const url = window.location.origin + '/listing/' + listingId;
+        navigator.clipboard.writeText(url).then(() => {
+            showNotification('Link copied to clipboard!', 'success');
+        });
+    }
+}
+
+// Share entire wishlist
+function shareWishlist() {
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Travel Wishlist - Travique',
+            url: window.location.href
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            showNotification('Wishlist link copied to clipboard!', 'success');
+        });
+    }
+}
+
+// Clear wishlist
+function clearWishlist() {
+    if (confirm('Are you sure you want to remove all items from your wishlist? This action cannot be undone.')) {
+        // Implementation for clearing wishlist
+        fetch('/user/wishlist/clear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+</script>

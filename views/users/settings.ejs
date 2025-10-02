@@ -1,0 +1,331 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <!-- Settings Header -->
+            <div class="profile-header-card mb-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg"
+                             alt="Profile Avatar" class="profile-avatar-xl">
+                    </div>
+                    <div class="col">
+                        <h2 class="profile-name-large mb-2">
+                            Settings
+                        </h2>
+                        <p class="profile-email mb-0">
+                            Manage your account settings and profile information
+                        </p>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/user/profile" class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-arrow-left me-2"></i>
+                            Back to Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Profile Information Display -->
+                <div class="col-12 col-lg-8">
+                    <!-- Basic Information -->
+                    <div class="settings-section mb-4">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-user me-2"></i>
+                            Basic Information
+                        </h4>
+                        <div class="info-card">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-user text-primary me-2"></i>
+                                        <div>
+                                            <strong>First Name</strong><br>
+                                            <span class="info-value"><%= user.profile?.firstName || 'Not set' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-user text-primary me-2"></i>
+                                        <div>
+                                            <strong>Last Name</strong><br>
+                                            <span class="info-value"><%= user.profile?.lastName || 'Not set' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="info-item">
+                                    <i class="fa-solid fa-address-card text-primary me-2"></i>
+                                    <div>
+                                        <strong>Bio</strong><br>
+                                        <span class="info-value"><%= user.profile?.bio || 'No bio added yet' %></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-phone text-primary me-2"></i>
+                                        <div>
+                                            <strong>Phone Number</strong><br>
+                                            <span class="info-value"><%= user.profile?.phone || 'Not set' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-location-dot text-primary me-2"></i>
+                                        <div>
+                                            <strong>Location</strong><br>
+                                            <span class="info-value"><%= user.profile?.location || 'Not set' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travel Preferences -->
+                    <div class="settings-section mb-4">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-suitcase-rolling me-2"></i>
+                            Travel Preferences
+                        </h4>
+                        <div class="info-card">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-route text-primary me-2"></i>
+                                        <div>
+                                            <strong>Travel Style</strong><br>
+                                            <span class="info-value"><%= user.profile?.preferences?.travelStyle || 'Not specified' %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-dollar-sign text-primary me-2"></i>
+                                        <div>
+                                            <strong>Budget Range</strong><br>
+                                            <span class="info-value">
+                                                ₹<%= user.profile?.preferences?.priceRange?.min || 0 %> -
+                                                ₹<%= user.profile?.preferences?.priceRange?.max || 100000 %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% if(user.profile?.preferences?.favoriteCategories && user.profile.preferences.favoriteCategories.length > 0) { %>
+                            <div class="mb-3">
+                                <div class="info-item">
+                                    <i class="fa-solid fa-heart text-primary me-2"></i>
+                                    <div>
+                                        <strong>Favorite Categories</strong><br>
+                                        <div class="category-tags mt-2">
+                                            <% user.profile.preferences.favoriteCategories.forEach(category => { %>
+                                                <span class="category-tag"><%= category %></span>
+                                            <% }) %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } else { %>
+                            <div class="mb-3">
+                                <div class="info-item">
+                                    <i class="fa-solid fa-heart text-muted me-2"></i>
+                                    <div>
+                                        <strong>Favorite Categories</strong><br>
+                                        <span class="info-value text-muted">No favorite categories selected</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <!-- Account Information -->
+                    <div class="settings-section mb-4">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-user-circle me-2"></i>
+                            Account Information
+                        </h4>
+                        <div class="info-card">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-envelope text-primary me-2"></i>
+                                        <div>
+                                            <strong>Email</strong><br>
+                                            <span class="info-value"><%= user.email %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-user text-primary me-2"></i>
+                                        <div>
+                                            <strong>Username</strong><br>
+                                            <span class="info-value">@<%= user.username %></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="info-item">
+                                    <i class="fa-solid fa-calendar text-primary me-2"></i>
+                                    <div>
+                                        <strong>Member Since</strong><br>
+                                        <span class="info-value"><%= user.stats?.joinedDate ? new Date(user.stats.joinedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Recently' %></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Statistics Sidebar -->
+                <div class="col-12 col-lg-4">
+                    <div class="settings-section">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-chart-bar me-2"></i>
+                            Account Statistics
+                        </h4>
+                        <div class="stats-card">
+                            <div class="stat-item mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Total Listings</span>
+                                    <strong><%= user.listingsCount || 0 %></strong>
+                                </div>
+                            </div>
+                            <div class="stat-item mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Wishlist Items</span>
+                                    <strong><%= user.wishlistCount || 0 %></strong>
+                                </div>
+                            </div>
+                            <div class="stat-item mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Reviews Given</span>
+                                    <strong><%= user.stats?.totalReviews || 0 %></strong>
+                                </div>
+                            </div>
+                            <div class="stat-item mb-3">
+                                <div class="d-flex justify-content-between">
+                                    <span>Bookings as Guest</span>
+                                    <strong><%= user._guestBookingsCount || 0 %></strong>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="d-flex justify-content-between">
+                                    <span>Bookings as Host</span>
+                                    <strong><%= user._hostBookingsCount || 0 %></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<style>
+.settings-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 56, 92, 0.1);
+    font-size: 1.3rem;
+}
+
+.info-card, .stats-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item i {
+    font-size: 1.2rem;
+    width: 24px;
+    text-align: center;
+    margin-top: 0.2rem;
+}
+
+.info-value {
+    color: #555;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.info-value.text-muted {
+    color: #999 !important;
+    font-style: italic;
+}
+
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.category-tag {
+    background: linear-gradient(135deg, #ff385c, #ff6b6b);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.stat-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stats-card {
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.05), rgba(102, 126, 234, 0.05));
+    border: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+@media (max-width: 768px) {
+    .info-card, .stats-card {
+        padding: 1.5rem;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-item i {
+        margin-bottom: 0.5rem;
+        margin-top: 0;
+    }
+}
+</style>

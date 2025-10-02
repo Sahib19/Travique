@@ -203,3 +203,38 @@ screen and (min-resolution: 192dpi) {
   -webkit-transition: background-position .7s;
   transition: background-position .7s;
 }
+
+/* Responsive star ratings */
+@media (max-width: 576px) {
+  .starability-result {
+    width: 120px;
+    height: 24px;
+  }
+
+  .starability-slot {
+    width: 120px;
+    min-height: 48px;
+  }
+
+  .starability-slot>label {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 400px) {
+  .starability-result {
+    width: 100px;
+    height: 20px;
+  }
+
+  .starability-slot {
+    width: 100px;
+    min-height: 40px;
+  }
+
+  .starability-slot>label {
+    width: 20px;
+    height: 20px;
+  }
+}

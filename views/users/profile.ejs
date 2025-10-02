@@ -1,0 +1,457 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+            <!-- Profile Header -->
+            <div class="profile-header-card mb-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg" 
+                             alt="Profile Avatar" class="profile-avatar-xl">
+                    </div>
+                    <div class="col">
+                        <h2 class="profile-name-large mb-2">
+                            <%= user.profile?.fullName || user.username %>
+                        </h2>
+                        <p class="profile-email mb-1">
+                            <i class="fa-solid fa-envelope me-2"></i>
+                            <%= user.email %>
+                        </p>
+                        <p class="profile-username mb-3">
+                            <i class="fa-solid fa-user me-2"></i>
+                            @<%= user.username %>
+                        </p>
+                        <div class="profile-stats">
+                            <span class="stat-item">
+                                <i class="fa-solid fa-heart me-1"></i>
+                                <%= user.wishlistCount %> Favorites
+                            </span>
+                            <span class="stat-item">
+                                <i class="fa-solid fa-calendar me-1"></i>
+                                Joined <%= user.stats?.joinedDate ? user.stats.joinedDate.toLocaleDateString() : 'Recently' %>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/user/profile/edit" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-edit me-2"></i>
+                            Edit Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Profile Information -->
+                <div class="col-12 col-md-8">
+                    <div class="profile-section">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-user-circle me-2"></i>
+                            About Me
+                        </h4>
+                        <div class="profile-info-card">
+                            <% if(user.profile?.bio) { %>
+                                <p class="bio-text"><%= user.profile.bio %></p>
+                            <% } else { %>
+                                <p class="text-muted">No bio added yet. <a href="/user/profile/edit">Add one now</a></p>
+                            <% } %>
+                            
+                            <div class="row mt-4">
+                                <% if(user.profile?.phone) { %>
+                                <div class="col-sm-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-phone text-primary me-2"></i>
+                                        <strong>Phone:</strong> <%= user.profile.phone %>
+                                    </div>
+                                </div>
+                                <% } %>
+                                
+                                <% if(user.profile?.location) { %>
+                                <div class="col-sm-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-location-dot text-primary me-2"></i>
+                                        <strong>Location:</strong> <%= user.profile.location %>
+                                    </div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travel Preferences -->
+                    <div class="profile-section">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-cog me-2"></i>
+                            Travel Preferences
+                        </h4>
+                        <div class="profile-info-card">
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-star text-warning me-2"></i>
+                                        <strong>Travel Style:&nbsp;</strong> 
+                                        <%= user.profile?.preferences?.travelStyle || 'Not specified' %>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <div class="info-item">
+                                        <i class="fa-solid fa-dollar-sign text-success me-2"></i>
+                                        <strong>Budget Range:&nbsp; </strong> 
+                                        ₹<%= user.profile?.preferences?.priceRange?.min || 0 %> - 
+                                        ₹<%= user.profile?.preferences?.priceRange?.max || 100000 %>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <% if(user.profile?.preferences?.favoriteCategories && user.profile.preferences.favoriteCategories.length > 0) { %>
+                            <div class="mt-3">
+                                <strong class="d-block mb-2">
+                                    <i class="fa-solid fa-heart text-danger me-2"></i>
+                                    Favorite Categories:
+                                </strong>
+                                <div class="category-tags">
+                                    <% user.profile.preferences.favoriteCategories.forEach(category => { %>
+                                        <span class="category-tag"><%= category %></span>
+                                    <% }); %>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Sidebar -->
+                <div class="col-12 col-md-4">
+                    <div class="profile-section">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-bolt me-2"></i>
+                            Quick Actions
+                        </h4>
+                        <div class="quick-actions">
+                            <a href="/user/wishlist" class="action-btn">
+                                <i class="fa-solid fa-heart"></i>
+                                <div>
+                                    <strong>My Wishlist</strong>
+                                    <small><%= user.wishlistCount %> items</small>
+                                </div>
+                            </a>
+                            <a href="/user/my-listings" class="action-btn">
+                                <i class="fa-solid fa-list"></i>
+                                <div>
+                                    <strong>My Listings</strong>
+                                    <small>Manage your properties</small>
+                                </div>
+                            </a>
+                            <a href="/listing/new" class="action-btn">
+                                <i class="fa-solid fa-plus"></i>
+                                <div>
+                                    <strong>Add New Listing</strong>
+                                    <small>Share a new place</small>
+                                </div>
+                            </a>
+                            <a href="/user/settings" class="action-btn">
+                                <i class="fa-solid fa-cog"></i>
+                                <div>
+                                    <strong>Settings</strong>
+                                    <small>Account preferences</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Recent Wishlist Items -->
+                    <% if(user.wishlist && user.wishlist.length > 0) { %>
+                    <div class="profile-section">
+                        <h4 class="section-title">
+                            <i class="fa-solid fa-clock me-2"></i>
+                            Recent Favorites
+                        </h4>
+                        <div class="recent-wishlist">
+                            <% user.wishlist.slice(0, 3).forEach(listing => { %>
+                                <a href="/listing/<%= listing._id %>" class="wishlist-item">
+                                    <img src="<%= listing.image?.url %>" alt="<%= listing.title %>">
+                                    <div>
+                                        <strong><%= listing.title %></strong>
+                                        <small>₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 0 %></small>
+                                    </div>
+                                </a>
+                            <% }); %>
+                            <% if(user.wishlist.length > 3) { %>
+                                <a href="/user/wishlist" class="view-all-link">
+                                    View all <%= user.wishlist.length %> favorites →
+                                </a>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Profile Page Styles */
+.profile-header-card {
+    background: linear-gradient(135deg, #ff385c, #ff6b6b);
+    color: white;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 25px rgba(255, 56, 92, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-header-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 56, 92, 0.1), rgba(255, 107, 107, 0.1));
+    border-radius: 1.5rem;
+    z-index: 1;
+}
+
+.profile-header-card > * {
+    position: relative;
+    z-index: 2;
+}
+
+.profile-avatar-xl {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    object-fit: cover;
+}
+
+.profile-name-large {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.profile-email, .profile-username {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-size: 1rem;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.profile-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 56, 92, 0.1);
+    font-size: 1.3rem;
+}
+
+.profile-info-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.bio-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.category-tag {
+    background: linear-gradient(135deg, #ff385c, #ff6b6b);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    color: #ff385c;
+    text-decoration: none;
+}
+
+.action-btn i {
+    font-size: 1.5rem;
+    color: #ff385c;
+    margin-right: 1rem;
+    width: 40px;
+    text-align: center;
+}
+
+.action-btn div {
+    flex: 1;
+}
+
+.action-btn strong {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.action-btn small {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.recent-wishlist {
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.wishlist-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s ease;
+}
+
+.wishlist-item:last-child {
+    border-bottom: none;
+}
+
+.wishlist-item:hover {
+    background-color: #f8f9fa;
+    text-decoration: none;
+    color: #333;
+}
+
+.wishlist-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+    margin-right: 1rem;
+}
+
+.wishlist-item div {
+    flex: 1;
+}
+
+.wishlist-item strong {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.wishlist-item small {
+    color: #ff385c;
+    font-weight: 600;
+}
+
+.view-all-link {
+    display: block;
+    padding: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ff385c, #ff6b6b);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.view-all-link:hover {
+    opacity: 0.9;
+    text-decoration: none;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .profile-header-card {
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .profile-avatar-xl {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 1rem auto;
+    }
+
+    .profile-name-large {
+        font-size: 1.5rem;
+    }
+
+    .profile-stats {
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .profile-info-card {
+        padding: 1.5rem;
+    }
+}
+</style>

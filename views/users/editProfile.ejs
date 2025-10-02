@@ -1,0 +1,242 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            <!-- Edit Profile Header -->
+            <div class="profile-header-card mb-4">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg"
+                             alt="Profile Avatar" class="profile-avatar-xl">
+                    </div>
+                    <div class="col">
+                        <h2 class="profile-name-large mb-2">
+                            Edit Profile
+                        </h2>
+                        <p class="profile-email mb-0">
+                            Update your personal information and travel preferences
+                        </p>
+                    </div>
+                    <div class="col-auto">
+                        <a href="/user/profile" class="btn btn-outline-secondary">
+                            <i class="fa-solid fa-arrow-left me-2"></i>
+                            Back to Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile Form -->
+            <form action="/user/profile/update" method="POST" class="edit-profile-form">
+                <div class="row">
+                    <!-- Basic Information -->
+                    <div class="col-12">
+                        <div class="form-section mb-4">
+                            <h4 class="section-title">
+                                <i class="fa-solid fa-user me-2"></i>
+                                Basic Information
+                            </h4>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="firstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" name="firstName"
+                                               value="<%= user.profile?.firstName || '' %>"
+                                               placeholder="Enter your first name">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" name="lastName"
+                                               value="<%= user.profile?.lastName || '' %>"
+                                               placeholder="Enter your last name">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="bio" class="form-label">Bio</label>
+                                    <textarea class="form-control" id="bio" name="bio" rows="4"
+                                              placeholder="Tell us about yourself, your travel interests, and what makes you unique as a traveler..."><%= user.profile?.bio || '' %></textarea>
+                                    <div class="form-text">Share your travel story, interests, and what you're looking for in destinations.</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="phone" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="phone" name="phone"
+                                               value="<%= user.profile?.phone || '' %>"
+                                               placeholder="Enter your phone number">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="location" class="form-label">Location</label>
+                                        <input type="text" class="form-control" id="location" name="location"
+                                               value="<%= user.profile?.location || '' %>"
+                                               placeholder="Enter your city, country">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Travel Preferences -->
+                    <div class="col-12">
+                        <div class="form-section mb-4">
+                            <h4 class="section-title">
+                                <i class="fa-solid fa-suitcase-rolling me-2"></i>
+                                Travel Preferences
+                            </h4>
+                            <div class="form-card">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="travelStyle" class="form-label">Travel Style</label>
+                                        <select class="form-select" id="travelStyle" name="travelStyle">
+                                            <option value="Budget" <%= user.profile?.preferences?.travelStyle === 'Budget' ? 'selected' : '' %>>Budget</option>
+                                            <option value="Mid-range" <%= user.profile?.preferences?.travelStyle === 'Mid-range' ? 'selected' : '' %>>Mid-range</option>
+                                            <option value="Luxury" <%= user.profile?.preferences?.travelStyle === 'Luxury' ? 'selected' : '' %>>Luxury</option>
+                                            <option value="Adventure" <%= user.profile?.preferences?.travelStyle === 'Adventure' ? 'selected' : '' %>>Adventure</option>
+                                            <option value="Relaxation" <%= user.profile?.preferences?.travelStyle === 'Relaxation' ? 'selected' : '' %>>Relaxation</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="priceMin" class="form-label">Min Budget (₹)</label>
+                                        <input type="number" class="form-control" id="priceMin" name="priceMin"
+                                               value="<%= user.profile?.preferences?.priceRange?.min || 0 %>"
+                                               min="0" placeholder="0">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label for="priceMax" class="form-label">Max Budget (₹)</label>
+                                        <input type="number" class="form-control" id="priceMax" name="priceMax"
+                                               value="<%= user.profile?.preferences?.priceRange?.max || 100000 %>"
+                                               min="0" placeholder="100000">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Favorite Categories</label>
+                                    <div class="row">
+                                        <% const categories = ["Trending", "Rooms", "Iconic Cities", "Mountains", "Forest", "Heritage Sites", "Castles", "Beaches", "Camping", "Farms", "Artic"]; %>
+                                        <% categories.forEach(category => { %>
+                                            <div class="col-md-4 col-sm-6 mb-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="<%= category.replace(/\s+/g, '').toLowerCase() %>"
+                                                           name="favoriteCategories"
+                                                           value="<%= category %>"
+                                                           <%= (user.profile?.preferences?.favoriteCategories && user.profile.preferences.favoriteCategories.includes(category)) ? 'checked' : '' %>>
+                                                    <label class="form-check-label" for="<%= category.replace(/\s+/g, '').toLowerCase() %>">
+                                                        <%= category %>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        <% }) %>
+                                    </div>
+                                    <div class="form-text">Select the types of destinations that interest you most.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-save me-2"></i>
+                        Save Changes
+                    </button>
+                    <a href="/user/profile" class="btn btn-outline-secondary btn-lg ms-3">
+                        <i class="fa-solid fa-times me-2"></i>
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(255, 56, 92, 0.1);
+    font-size: 1.3rem;
+}
+
+.form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 56, 92, 0.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid rgba(255, 56, 92, 0.2);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #ff385c;
+    box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.25);
+}
+
+.form-check-input:checked {
+    background-color: #ff385c;
+    border-color: #ff385c;
+}
+
+.form-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+.form-actions {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 56, 92, 0.1);
+    margin-top: 2rem;
+}
+
+.btn {
+    border-radius: 10px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff385c, #ff6b6b);
+    border: none;
+    box-shadow: 0 4px 15px rgba(255, 56, 92, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 56, 92, 0.4);
+}
+
+.btn-outline-secondary {
+    border: 1px solid #6c757d;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+</style>

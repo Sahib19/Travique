@@ -1,135 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WonderLust Listings</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
 <% layout("/layouts/boilerplate") %>
 
-  <body>
-    <!-- filter -->
-    <div id="filters">
-      <div class="filter">
-        <div><i class="fa-solid fa-earth-americas"></i></div>
-        <p>All</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-fire"></i></div>
-        <p>Trending</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-bed"></i></div>
-        <p>Rooms</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain-city"></i></div>
-        <p>Iconic Cities</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-mountain"></i></div>
-        <p>Mountains</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-tree"></i></div>
-        <p>Forest</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-gopuram"></i></div>
-        <p>Heritage Sites</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-person-swimming"></i></div>
-        <p>Amazing Pools</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-campground"></i></div>
-        <p>Camping</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-cow"></i></div>
-        <p>Farms</p>
-      </div>
-
-      <div class="filter">
-        <div><i class="fa-solid fa-snowflake"></i></div>
-        <p>Artic</p>
+  <body style="background-color: #f8f9fa;">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="container">
+        <div class="text-center py-5">
+          <h1 class="hero-title">Discover Amazing Places</h1>
+          <p class="hero-subtitle">Find your next adventure with our curated collection of unique destinations</p>
+        </div>
       </div>
     </div>
 
+    <!-- Filter Section -->
+    <div class="container">
+      <div id="filters">
+        <div class="filter filter-active">
+          <i class="fa-solid fa-earth-americas"></i>
+          <p>All</p>
+        </div>
 
-    <!-- all cards -->
+        <div class="filter">
+          <i class="fa-solid fa-fire"></i>
+          <p>Trending</p>
+        </div>
 
-    <div class="container mt-4">
+        <div class="filter">
+          <i class="fa-solid fa-bed"></i>
+          <p>Rooms</p>
+        </div>
 
+        <div class="filter">
+          <i class="fa-solid fa-mountain-city"></i>
+          <p>Iconic Cities</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-mountain"></i>
+          <p>Mountains</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-tree"></i>
+          <p>Forest</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-gopuram"></i>
+          <p>Heritage Sites</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-person-swimming"></i>
+          <p>Amazing Pools</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-campground"></i>
+          <p>Camping</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-cow"></i>
+          <p>Farms</p>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-snowflake"></i>
+          <p>Artic</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Listings Section -->
+    <div class="container py-5">
       <%if(listingCount===0){ %>
-        <div class="col-12 d-flex justify-content-center mt-5 mb-5 ">
-          <div class="card shadow-sm rounded-4 text-center" style="max-width: 30rem; margin-left: 50px;">
-            <div class="card-body p-5">
-              <img
-                src="https://static.vecteezy.com/system/resources/previews/007/104/553/non_2x/search-no-result-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
-                alt="No results" class="mb-4" style="width: 130px; ">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm text-center">
+              <div class="card-body p-5">
+                <img
+                  src="https://static.vecteezy.com/system/resources/previews/007/104/553/non_2x/search-no-result-not-found-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
+                  alt="No results" class="mb-4" style="width: 130px; height: auto;">
 
-              <h4 class="card-title text-muted">No Listings Found </h4>
-              <p class="card-text text-secondary">
-                It looks like there are no listings under <b>
-                  <%= category %>
-                </b>.
-                Try browsing all available listings instead.
-              </p>
+                <h4 class="card-title text-muted mb-3">No Listings Found</h4>
+                <p class="card-text text-secondary mb-4">
+                  It looks like there are no listings under <strong><%= category %></strong>.
+                  Try browsing all available listings instead.
+                </p>
 
-              <a href="/listing" class="btn btn-outline-danger search-button ">
-                View All Listings
-              </a>
+                <a href="/listing" class="btn btn-outline-danger search-button">
+                  View All Listings
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <% }else{ %>
-          <!-- Listings Grid -->
-          <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-3 mb-2">
-            <% for(let list of allListing) { %>
-              <div class="col rounded-4">
-                <div class="card-single rounded-4">
-                  <a href="/listing/<%= list._id %>" class="text-decoration-none text-dark rounded-4">
-                    <div class="card h-100 shadow-sm rounded-4">
-                      <div class="image-div rounded-top-4">
-                      <img src="<%= list.image.url %>" class="card-img-top rounded-top-4" alt="listing-image"
-                        style="height: 20rem; object-fit: cover;">
-                      </div>
+      <% } else { %>
+        <!-- Listings Grid -->
+        <div class="row g-4">
+          <% for(let list of allListing) { %>
+            <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+              <div class="card-single">
+                <div class="card h-100">
+                  <div class="image-div position-relative">
+                    <a href="/listing/<%= list._id %>" class="text-decoration-none">
+                      <img src="<%= list.image.url %>" class="card-img-top" alt="<%= list.title %>">
+                    </a>
 
-                      <div class="card-body card-text ps-2 pt-2">    
-                          <span class="place">
-                            <%= list.title %>
-                          </span>
-                          <span class="price">
-                            &#8377; <%= list.price ? list.price.toLocaleString("en-IN") : 0 %>
-                          </span>                       
-                      </div>
+                    <!-- Wishlist Heart Icon -->
+                    <% if(currentUser) { %>
+                      <%
+                        let isInWishlist = false;
+                        if(currentUser.wishlist) {
+                          isInWishlist = currentUser.wishlist.some(item =>
+                            item._id ? item._id.toString() === list._id.toString() : item.toString() === list._id.toString()
+                          );
+                        }
+                      %>
+                      <button class="wishlist-btn <%= isInWishlist ? 'active' : '' %>"
+                              data-listing-id="<%= list._id %>"
+                              onclick="toggleWishlist('<%= list._id %>', this)">
+                        <i class="fa-solid fa-heart"></i>
+                      </button>
+                    <% } %>
+                  </div>
+
+                  <a href="/listing/<%= list._id %>" class="text-decoration-none">
+                    <div class="card-text">
+                      <span class="place"><%= list.title %></span>
+                      <span class="price">₹ <%= list.price ? list.price.toLocaleString("en-IN") : 0 %></span>
                     </div>
                   </a>
                 </div>
               </div>
-              <% } %>
-          </div>
+            </div>
           <% } %>
+        </div>
+      <% } %>
     </div>
-
-    <!-- Bootstrap JS (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- script tag for filter logic -->
     <script src="/js/filter.js"></script>
