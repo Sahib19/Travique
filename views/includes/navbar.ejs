@@ -52,7 +52,7 @@
                     <!-- Profile Dropdown -->
                     <div class="dropdown position-relative">
                         <button class="btn profile-dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg" 
+                            <img src="<%= currentUser.profile?.avatar?.url || 'https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg' %>" 
                                  alt="Profile" class="profile-avatar">
                             <span class="profile-name d-none d-md-inline">
                                 <%= (currentUser.profile && currentUser.profile.firstName && currentUser.profile.lastName) ? (currentUser.profile.firstName + ' ' + currentUser.profile.lastName) : currentUser.username %>
@@ -63,7 +63,7 @@
                             <!-- User Info Section -->
                             <li class="profile-header">
                                 <div class="d-flex align-items-center">
-                                    <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg" 
+                                    <img src="<%= currentUser.profile?.avatar?.url || 'https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg' %>" 
                                          alt="Profile" class="profile-avatar-large me-3">
                                     <div>
                                         <div class="profile-dropdown-name">

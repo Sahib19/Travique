@@ -7,7 +7,7 @@
             <div class="profile-header-card mb-4">
                 <div class="row align-items-center">
                     <div class="col-auto">
-                        <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg"
+                        <img src="<%= user.profile?.avatar?.url || 'https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg' %>"
                              alt="Profile Avatar" class="profile-avatar-xl">
                     </div>
                     <div class="col">
@@ -28,8 +28,45 @@
             </div>
 
             <!-- Edit Profile Form -->
-            <form action="/user/profile/update" method="POST" class="edit-profile-form">
+            <form action="/user/profile/update" method="POST" enctype="multipart/form-data" class="edit-profile-form">
                 <div class="row">
+                    <!-- Profile Avatar Section -->
+                    <div class="col-12">
+                        <div class="form-section mb-4">
+                            <h4 class="section-title">
+                                <i class="fa-solid fa-camera me-2"></i>
+                                Profile Photo
+                            </h4>
+                            <div class="form-card">
+                                <div class="row align-items-center">
+                                    <div class="col-md-4 text-center">
+                                        <img src="<%= user.profile?.avatar?.url || 'https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg' %>"
+                                             alt="Profile Avatar" class="profile-avatar-xl mb-3 avatar-preview">
+                                        <div>
+                                            <label for="avatar" class="btn btn-outline-primary btn-sm">
+                                                <i class="fa-solid fa-upload me-2"></i>
+                                                Change Photo
+                                            </label>
+                                            <input type="file" id="avatar" name="avatar" accept="image/*" class="d-none">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="avatar-upload-info">
+                                            <h6>Upload a new profile photo</h6>
+                                            <p class="text-muted mb-2">Choose a clear photo that shows your face. For best results, use a square image.</p>
+                                            <div class="upload-requirements">
+                                                <small class="text-muted">
+                                                    <i class="fa-solid fa-info-circle me-1"></i>
+                                                    Supported formats: JPG, JPEG, PNG. Max size: 5MB
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Basic Information -->
                     <div class="col-12">
                         <div class="form-section mb-4">
@@ -51,19 +88,18 @@
                                                value="<%= user.profile?.lastName || '' %>"
                                                placeholder="Enter your last name">
                                     </div>
-                                </div>
 
                                 <div class="mb-3">
                                     <label for="bio" class="form-label">Bio</label>
                                     <textarea class="form-control" id="bio" name="bio" rows="4"
                                               placeholder="Tell us about yourself, your travel interests, and what makes you unique as a traveler..."><%= user.profile?.bio || '' %></textarea>
-                                    <div class="form-text">Share your travel story, interests, and what you're looking for in destinations.</div>
+                                    <div class="form-text">Share your travel story, interests, and what makes you unique as a traveler...</div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="phone" class="form-label">Phone Number</label>
-                                        <input type="tel" class="form-control" id="phone" name="phone"
+{{ ... }}
                                                value="<%= user.profile?.phone || '' %>"
                                                placeholder="Enter your phone number">
                                     </div>
@@ -239,4 +275,68 @@
     border-color: #6c757d;
     color: white;
 }
+
+/* Avatar Upload Styles */
+.profile-avatar-xl {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 56, 92, 0.2);
+    object-fit: cover;
+    transition: border-color 0.3s ease, opacity 0.3s ease;
+}
+
+.profile-avatar-xl:hover {
+    border-color: #ff385c;
+}
+
+.avatar-upload-info h6 {
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.upload-requirements {
+    background: rgba(255, 56, 92, 0.05);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border-left: 4px solid #ff385c;
+}
 </style>
+
+<script>
+// Avatar upload functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const avatarInput = document.getElementById('avatar');
+    const avatarLabel = document.querySelector('label[for="avatar"]');
+
+    // Click label to trigger file input
+    avatarLabel.addEventListener('click', function(e) {
+        e.preventDefault();
+        avatarInput.click();
+    });
+
+    // Show preview when file is selected
+    avatarInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Show loading state
+            const previewImg = document.querySelector('.avatar-preview');
+            previewImg.style.opacity = '0.7';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                previewImg.style.opacity = '1';
+
+                // Add visual feedback
+                const changeBtn = document.querySelector('label[for="avatar"]');
+                changeBtn.innerHTML = '<i class="fa-solid fa-check me-2"></i>Photo Selected';
+                changeBtn.classList.remove('btn-outline-primary');
+                changeBtn.classList.add('btn-success');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+</script>

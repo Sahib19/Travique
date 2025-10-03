@@ -7,6 +7,7 @@ const passport = require("passport");
 const { saveRedirectUrl, isLoggedIn } = require("../middleware");
 
 const userController = require("../Controllers/user")
+const upload = userController.upload;
 
 router.route("/signup")
     .get(userController.showSignupPage)
@@ -23,7 +24,7 @@ router.get("/logout", userController.logout)
 // Profile Routes
 router.get("/profile", isLoggedIn, wrapasync(userController.showProfile));
 router.get("/profile/edit", isLoggedIn, wrapasync(userController.editProfile));
-router.post("/profile/update", isLoggedIn, wrapasync(userController.updateProfile));
+router.post("/profile/update", isLoggedIn, upload.single('avatar'), wrapasync(userController.updateProfile));
 
 // Wishlist Routes
 router.get("/wishlist", isLoggedIn, wrapasync(userController.showWishlist));

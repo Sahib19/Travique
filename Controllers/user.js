@@ -1,6 +1,10 @@
 const User = require("../models/user");
 const Listing = require("../models/listing");
 const Booking = require("../models/booking");
+const multer = require('multer');
+const { storage, cloudinary } = require('../cloudConfig.js');
+
+const upload = multer({ storage });
 
 module.exports.showSignupPage = (req, res) => {
     res.render("users/signup.ejs");
@@ -80,6 +84,19 @@ module.exports.updateProfile = async (req, res) => {
             'profile.preferences.priceRange.min': priceMin || 0,
             'profile.preferences.priceRange.max': priceMax || 100000
         };
+
+        // Handle avatar upload if provided
+        if (req.file) {
+            const user = await User.findById(req.user._id);
+            // Delete old avatar from Cloudinary if it exists and is not the default
+            if (user.profile.avatar.filename && user.profile.avatar.url !== 'https://res.cloudinary.com/dqzho5qhz/image/upload/v1703123456/default-avatar.png') {
+                await cloudinary.uploader.destroy(user.profile.avatar.filename);
+            }
+
+            // Update with new avatar
+            updateData['profile.avatar.url'] = req.file.path;
+            updateData['profile.avatar.filename'] = req.file.filename;
+        }
 
         await User.findByIdAndUpdate(req.user._id, updateData, { runValidators: true });
         req.flash("success", "Profile updated successfully!");
@@ -186,3 +203,5 @@ module.exports.showSettings = async (req, res) => {
         res.redirect("/listing");
     }
 }
+
+module.exports.upload = upload;
