@@ -55,7 +55,7 @@
                             <img src="<%= currentUser.profile?.avatar?.url || 'https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg' %>" 
                                  alt="Profile" class="profile-avatar">
                             <span class="profile-name d-none d-md-inline">
-                                <%= (currentUser.profile && currentUser.profile.firstName && currentUser.profile.lastName) ? (currentUser.profile.firstName + ' ' + currentUser.profile.lastName) : currentUser.username %>
+                                <%= (currentUser.profile && currentUser.profile.firstName ) ? (currentUser.profile.firstName + ' ' + currentUser.profile.lastName) : currentUser.username %>
                             </span>
                         </button>
                         
@@ -67,7 +67,7 @@
                                          alt="Profile" class="profile-avatar-large me-3">
                                     <div>
                                         <div class="profile-dropdown-name">
-                                            <%= (currentUser.profile && currentUser.profile.firstName && currentUser.profile.lastName) ? (currentUser.profile.firstName + ' ' + currentUser.profile.lastName) : currentUser.username %>
+                                            <%= (currentUser.profile && currentUser.profile.firstName ) ? (currentUser.profile.firstName + ' ' + currentUser.profile.lastName) : currentUser.username %>
                                         </div>
                                         <div class="profile-dropdown-email">
                                             <%= currentUser.email %>
