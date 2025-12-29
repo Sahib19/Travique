@@ -183,7 +183,7 @@ app.use(async (req, res, next) => {
 })
 
 app.get("/", (req, res) => {
-  res.redirect("/listing");  // or render your home.ejs
+  res.render("home/landing.ejs");
 });
 
 // listing routers

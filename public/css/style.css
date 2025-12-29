@@ -1902,7 +1902,7 @@ h1 {
 }
 
 .rating-container {
-  transform: scale(0.9);
+  transform: scale(0.7);
   transform-origin: left;
   display: inline-block;
 }

@@ -1,0 +1,462 @@
+/* Travique Landing Page */
+:root {
+  --travique-rose: #ff385c;
+  --travique-sunset: #ff6b6b;
+  --travique-indigo: #667eea;
+  --travique-ink: #1f1f29;
+  --travique-cloud: #f7f2ff;
+}
+
+.landing-hero {
+  margin: 3rem auto;
+  padding: 3rem clamp(1.5rem, 4vw, 3.5rem);
+  border-radius: 32px;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 104, 120, 0.25), transparent 55%),
+    radial-gradient(circle at 80% 0%, rgba(118, 75, 162, 0.35), transparent 50%),
+    linear-gradient(135deg, #fff5f6, var(--travique-cloud));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(2rem, 4vw, 4rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+
+.landing-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.landing-eyebrow {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--travique-sunset);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.landing-hero__content h1 {
+  font-family: "Montserrat", "Segoe UI", sans-serif;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--travique-ink);
+}
+
+.landing-hero__subtitle {
+  font-size: 1.1rem;
+  color: #4b4b57;
+  max-width: 540px;
+  margin-bottom: 2rem;
+}
+
+.landing-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.btn.btn-gradient,
+.landing-cta .btn-gradient {
+  background: linear-gradient(135deg, var(--travique-rose), var(--travique-sunset));
+  color: #fff !important;
+  border-radius: 999px;
+  padding: 0.85rem 1.75rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 15px 35px rgba(255, 56, 92, 0.35);
+}
+
+.btn.btn-gradient:hover,
+.landing-cta .btn-gradient:hover {
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(255, 56, 92, 0.45);
+}
+
+.btn.btn-glass,
+.landing-cta .btn-glass {
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 56, 92, 0.35);
+  color: var(--travique-rose) !important;
+  backdrop-filter: blur(6px);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.btn.btn-glass:hover,
+.landing-cta .btn-glass:hover {
+  color: var(--travique-rose) !important;
+  border-color: rgba(255, 56, 92, 0.65);
+  transform: translateY(-3px);
+}
+
+.landing-cta .btn-gradient {
+  min-width: 180px;
+  text-align: center;
+}
+
+.landing-cta .btn-glass {
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.landing-cta .btn-glass:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.landing-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.landing-metrics div {
+  padding: 1rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  color: #49495d;
+  backdrop-filter: blur(6px);
+}
+
+.landing-metrics span {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--travique-rose);
+  margin-bottom: 0.2rem;
+}
+
+.landing-hero__visual {
+  position: relative;
+  min-height: 360px;
+}
+
+.hero-passport {
+  position: relative;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 35px 70px rgba(31, 31, 41, 0.25);
+}
+
+.hero-passport img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-passport__card {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  padding: 1.25rem;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--travique-ink);
+  width: calc(100% - 2.5rem);
+  box-shadow: 0 25px 40px rgba(0, 0, 0, 0.2);
+}
+
+.hero-passport__card .badge {
+  font-size: 0.75rem;
+}
+
+.hero-flight-card {
+  position: absolute;
+  top: -1.5rem;
+  right: -1rem;
+  width: min(320px, 70%);
+  padding: 1.5rem;
+  border-radius: 24px;
+  background: var(--travique-ink);
+  color: white;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.hero-flight__avatars {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  background: white;
+}
+
+.avatar.is-primary {
+  background: #ffd5dd;
+  color: #831c34;
+}
+
+.avatar.is-secondary {
+  background: #d6d4ff;
+  color: #2a1b85;
+}
+
+.avatar.is-tertiary {
+  background: #ffffff;
+  color: var(--travique-rose);
+}
+
+.landing-pillars {
+  margin-top: 4rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.pillar-card {
+  padding: 1.75rem;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 104, 120, 0.2);
+  box-shadow: 0 18px 40px rgba(255, 104, 120, 0.1);
+}
+
+.pillar-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255, 56, 92, 0.15), rgba(118, 75, 162, 0.15));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--travique-rose);
+  margin-bottom: 1rem;
+}
+
+.landing-collections {
+  margin-top: 5rem;
+}
+
+.collections-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.landing-collections h2 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  margin: 0;
+}
+
+.link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(31, 31, 41, 0.15);
+  color: var(--travique-ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link-pill:hover {
+  border-color: var(--travique-rose);
+  color: var(--travique-rose);
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+
+.collection-card {
+  border-radius: 26px;
+  padding: 1.75rem;
+  color: white;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.collection-card span {
+  font-weight: 600;
+}
+
+.gradient-one {
+  background: linear-gradient(135deg, #5f2c82, #49a09d);
+}
+
+.gradient-two {
+  background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+}
+
+.gradient-three {
+  background: linear-gradient(135deg, #7f5a83, #0d324d);
+}
+
+.gradient-four {
+  background: linear-gradient(135deg, #536976, #292e49);
+}
+
+.landing-experiences {
+  margin-block: 5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.75rem;
+}
+
+.landing-experiences .section-header {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  max-width: 760px;
+}
+
+.landing-experiences .section-subtitle {
+  margin: 0.25rem 0 0;
+  color: #4a4a5c;
+  max-width: 520px;
+}
+
+.experience-card {
+  padding: 1.9rem;
+  border-radius: 28px;
+  background: white;
+  border: 1px solid rgba(31, 31, 41, 0.06);
+  box-shadow: 0 25px 60px rgba(31, 31, 41, 0.08);
+}
+
+.experience-card ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 1rem 0 0;
+}
+
+.experience-card li {
+  margin-bottom: 0.5rem;
+  color: #444458;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.experience-card li i {
+  color: #15c789;
+}
+
+.experience-card.highlight {
+  background: linear-gradient(135deg, #1f1f29, #25253a);
+  color: white;
+}
+
+.experience-card.highlight .host-stats {
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.experience-card.highlight .host-stats span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.experience-card .drop-card {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border-radius: 20px;
+  background: rgba(255, 104, 120, 0.08);
+  border: 1px dashed rgba(255, 104, 120, 0.4);
+}
+
+.landing-cta {
+  margin-bottom: 4rem;
+  padding: 2.5rem clamp(1.25rem, 3vw, 3rem);
+  border-radius: 32px;
+  background: linear-gradient(135deg, var(--travique-rose), var(--travique-sunset), #fda085);
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.landing-cta .landing-eyebrow {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+  letter-spacing: 0.35em;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.landing-cta h2 {
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.landing-cta p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .landing-hero {
+    grid-template-columns: 1fr;
+    padding: 2.5rem 1.25rem;
+  }
+
+  .hero-flight-card {
+    position: relative;
+    width: 100%;
+    top: -2rem;
+    right: 0;
+    margin-bottom: -2rem;
+  }
+
+  .landing-pillars,
+  .landing-collections,
+  .landing-experiences {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .landing-cta {
+    flex-direction: column;
+    text-align: center;
+  }
+}
