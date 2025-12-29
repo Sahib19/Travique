@@ -3,16 +3,45 @@ const ExpressError = require("../utils/ExpressError.js");
 
 const { getResizedImageUrl } = require("../utils/resizeImages.js");
 
+const CATEGORY_ORDER = [
+    "Trending",
+    "Rooms",
+    "Iconic Cities",
+    "Mountains",
+    "Forest",
+    "Heritage Sites",
+    "Castles",
+    "Beaches",
+    "Camping",
+    "Farms",
+    "Artic"
+];
+
 module.exports.index = async (req, res) => {
     const category = req.query.category;
-    let allListing = {};
+    let allListing = [];
+    let groupedListings = null;
+
     if (!category || category === "All") {
         allListing = await Listing.find({});
+        groupedListings = CATEGORY_ORDER.map(cat => ({
+            name: cat,
+            listings: allListing.filter(list => list.category === cat)
+        })).filter(group => group.listings.length > 0);
+
+        const miscListings = allListing.filter(list => !list.category || !CATEGORY_ORDER.includes(list.category));
+        if (miscListings.length) {
+            groupedListings.push({
+                name: "More escapes",
+                listings: miscListings
+            });
+        }
     } else {
         allListing = await Listing.find({ category: category });
     }
-    let  listingCount =  Object.keys(allListing).length ;
-    res.render("listings/index.ejs", { allListing , listingCount , category});
+
+    let listingCount = allListing.length;
+    res.render("listings/index.ejs", { allListing, listingCount, category, groupedListings });
 }
 
 module.exports.renderNewForm = (req, res) => {

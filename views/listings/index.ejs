@@ -2,78 +2,109 @@
 
   <body style="background-color: #f8f9fa;">
     <!-- Hero Section -->
-    <div class="hero-section">
+    <div class="hero-section listing-hero-section">
       <div class="container">
-        <div class="text-center py-5">
-          <h1 class="hero-title">Discover Amazing Places</h1>
-          <p class="hero-subtitle">Find your next adventure with our curated collection of unique destinations</p>
+        <div class="listing-hero">
+          <div class="listing-hero__content">
+            <span class="listing-hero__pill">Curated stays · Daily drops</span>
+            <h1>Discover amazing places for every travel mood.</h1>
+            <p>Scroll through designer lofts, coastal hideouts, and off-grid cabins vetted by Travique’s host community.</p>
+            <div class="listing-hero__stats">
+              <div>
+                <strong>2,300+</strong>
+                <span>handpicked stays</span>
+              </div>
+              <div>
+                <strong>140+</strong>
+                <span>cities & landscapes</span>
+              </div>
+              <div>
+                <strong>4.9/5</strong>
+                <span>guest satisfaction</span>
+              </div>
+            </div>
+          </div>
+          <div class="listing-hero__card">
+            <p class="listing-hero__card-label">Featured drop</p>
+            <h3>“Aurora Mirage” Igloos</h3>
+            <p>Nordic domes with glass ceilings to chase the northern lights.</p>
+            <div class="listing-hero__badge">Limited spots</div>
+            <a href="#filters" class="listing-hero__cta">Browse moods <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Filter Section -->
     <div class="container">
-      <div id="filters">
-        <div class="filter filter-active">
-          <i class="fa-solid fa-earth-americas"></i>
-          <p>All</p>
+      <div class="filter-rail-container">
+        <div class="filter-rail-header">
+          <div>
+            <p class="filter-rail-eyebrow">Browse by mood</p>
+            <h2>Pick a category to jump in</h2>
+          </div>
+          <button class="filter-rail-chip" onclick="window.location.href='/listing?category=All'">
+            Show all
+          </button>
         </div>
+        <div id="filters" class="filter-rail">
+          <div class="filter filter-active">
+            <i class="fa-solid fa-earth-americas"></i>
+            <p>All</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-fire"></i>
-          <p>Trending</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-bed"></i>
-          <p>Rooms</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-bed"></i>
+            <p>Rooms</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-mountain-city"></i>
-          <p>Iconic Cities</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-mountain"></i>
+            <p>Mountains</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-mountain"></i>
-          <p>Mountains</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-tree"></i>
+            <p>Forest</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-tree"></i>
-          <p>Forest</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-gopuram"></i>
+            <p>Heritage Sites</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-gopuram"></i>
-          <p>Heritage Sites</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Amazing Pools</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-person-swimming"></i>
-          <p>Amazing Pools</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-campground"></i>
+            <p>Camping</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-campground"></i>
-          <p>Camping</p>
-        </div>
+          <div class="filter">
+            <i class="fa-solid fa-cow"></i>
+            <p>Farms</p>
+          </div>
 
-        <div class="filter">
-          <i class="fa-solid fa-cow"></i>
-          <p>Farms</p>
-        </div>
-
-        <div class="filter">
-          <i class="fa-solid fa-snowflake"></i>
-          <p>Artic</p>
+          <div class="filter">
+            <i class="fa-solid fa-snowflake"></i>
+            <p>Artic</p>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Listings Section -->
     <div class="container py-5">
-      <%if(listingCount===0){ %>
+      <% const showGrouped = groupedListings && groupedListings.length && (!category || category === "All"); %>
+      <% if(listingCount===0){ %>
         <div class="row justify-content-center">
           <div class="col-12 col-md-8 col-lg-6">
             <div class="card border-0 shadow-sm text-center">
@@ -96,6 +127,62 @@
           </div>
         </div>
 
+      <% } else if(showGrouped) { %>
+        <% groupedListings.forEach(group => { %>
+          <section class="category-rail">
+            <div class="category-rail__header">
+              <div>
+                <p class="category-rail__eyebrow">Signature collection</p>
+                <h2><%= group.name %> escapes</h2>
+                <p class="category-rail__meta"><%= group.listings.length %> stays curated for this mood.</p>
+              </div>
+              <a class="category-rail__link" href="/listing?category=<%= encodeURIComponent(group.name === "More escapes" ? "All" : group.name) %>">
+                View all <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+
+            <div class="category-rail__scroller">
+              <% group.listings.forEach(list => { %>
+                <article class="listing-rail-card">
+                  <div class="listing-rail-image">
+                    <a href="/listing/<%= list._id %>" class="text-decoration-none">
+                      <img src="<%= list.image.url %>" alt="<%= list.title %>">
+                    </a>
+                    <% if(currentUser) { %>
+                      <%
+                        let isInWishlist = false;
+                        if(currentUser.wishlist) {
+                          isInWishlist = currentUser.wishlist.some(item =>
+                            item._id ? item._id.toString() === list._id.toString() : item.toString() === list._id.toString()
+                          );
+                        }
+                      %>
+                      <button class="wishlist-btn <%= isInWishlist ? 'active' : '' %>"
+                              data-listing-id="<%= list._id %>"
+                              onclick="toggleWishlist('<%= list._id %>', this)">
+                        <i class="fa-solid fa-heart"></i>
+                      </button>
+                    <% } %>
+                  </div>
+                  <div class="listing-rail-body">
+                    <div class="listing-rail-title">
+                      <h3><%= list.title %></h3>
+                      <div class="listing-rail-price">
+                        <span class="currency">₹</span>
+                        <span class="amount"><%= list.price ? list.price.toLocaleString("en-IN") : 0 %></span>
+                      </div>
+                    </div>
+                    <p class="listing-rail-location">
+                      <i class="fa-solid fa-location-dot"></i>
+                      <%= list.location || list.country || "Anywhere" %>
+                    </p>
+                    <a href="/listing/<%= list._id %>" class="listing-rail-link">View stay</a>
+                  </div>
+                </article>
+              <% }) %>
+            </div>
+          </section>
+        <% }) %>
       <% } else { %>
         <!-- Listings Grid -->
         <div class="row g-4">
